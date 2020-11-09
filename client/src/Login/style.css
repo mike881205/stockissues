@@ -1,0 +1,13 @@
+body {
+  padding: 20px;
+}
+
+.loginContainer {
+  padding-top: 3%;
+  padding-bottom: 5%;
+  width: 300px;
+}
+
+.reg {
+  color: black;
+}

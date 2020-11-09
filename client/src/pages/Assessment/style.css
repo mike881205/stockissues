@@ -1,0 +1,21 @@
+body {
+    color: white;
+}
+
+.jumbotron {
+    overflow-y: auto;
+    height: 350px!important;
+    padding: 30px!important;
+}
+
+form {
+    color: black;
+}
+
+hr {
+    background-color: white;
+}
+
+h3 {
+    font-family: 'Playfair Display SC', serif;
+}

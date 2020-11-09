@@ -1,0 +1,27 @@
+.navbar {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index:1000;
+    right: 0px;
+    background-color: #671847!important;
+    border-bottom-style: solid;
+    border-color: white;
+    font-family: 'Playfair Display SC', serif;
+}
+
+.nav-link {
+    color: white!important;
+}
+
+.navbar-toggler {
+    background-color: #F191D0!important;
+    color: white!important;
+}
+
+.GALimg {
+    height: 60px!important;
+    margin: 0!important;
+    padding: 0;
+}

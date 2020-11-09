@@ -1,0 +1,20 @@
+html, body {
+    height: 100%;
+}
+
+.container {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.jumbotron {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: 80%!important;
+}
+
+hr {
+    background-color: black;
+}
