@@ -1,38 +1,134 @@
 import React, { Component } from "react";
-import { FormBtn } from "../components/Form";
-import { Link } from 'react-router-dom'
+import { FormGroup, Input, Label, Small, FormBtn } from "../components/Form";
+import { DropdownList } from "react-widgets"
+import { Container } from "../components/Grid";
+import { Redirect } from 'react-router-dom'
+import API from "../utils/API";
 import "./home.css"
+import MissingGarmentInfo from "../components/MissingGarmentInfo";
+import ReceivedGarmentInfo from "../components/ReceivedGarmentInfo";
+
+const issues = ["Missing Garments", "Extra Garments Received - Packing Slip is Correct, No Missing Garments"]
+const reasons = ["Overage - Extra Sizes Received", "Overage - Wrong Sizes Received", "Wrong Brand Received", "Wrong Style Received", "Wrong Color Received", "Packing Slip is Correct - Missing Garments"]
 
 class Home extends Component {
+
+  state = {
+    PONum: "",
+    design: "",
+    issue: "",
+    reason: "",
+    receivedInput: false,
+    missing: "",
+    received: ""
+  }
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    console.log(name, value)
+    this.setState({
+      [name]: value.trim()
+    });
+  };
+
+  issueDropDown = event => {
+    console.log(event)
+    switch (event) {
+      case "Missing Garments":
+        this.setState({ issue: event });
+        break;
+      case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
+        this.setState({ issue: event });
+        break;
+    }
+  }
+
+  reasonDropDown = event => {
+    console.log(event)
+    switch (event) {
+      case "Overage - Extra Sizes Received":
+        this.setState({ reason: event });
+        break;
+      case "Overage - Wrong Sizes Received":
+        this.setState({ reason: event });
+        break;
+      case "Wrong Brand Received":
+        this.setState({ reason: event });
+        break;
+      case "Wrong Style Received":
+        this.setState({ reason: event });
+        break;
+      case "Wrong Color Received":
+        this.setState({ reason: event });
+        break;
+    }
+  }
+
+  // componentDidMount() {
+
+  // }
 
   render() {
     return (
       <div className="container" align="center">
         <div className="jumbotron homeJumbo">
-          <h1>Welcome!</h1>
+          <h1>Stock Issues</h1>
           <hr></hr>
-          <ul className="homeUL text-left">
-            <li>To begin a new assessment, click "New Assessment"</li>
-            <li>To view a list of clients who have completed assessments, click "View Clients"</li>
-          </ul>
-          <hr></hr>
-          <div className="row">
-            <div className="col-sm">
-              <Link to="/clientinput">
-                <button type="button" className="btn btn-outline-success homeBtn">New Assessment</button>
-              </Link>
-            </div>
-            <div className="col-sm">
-              <Link to="/clients">
-                <button type="button" className="btn btn-outline-success homeBtn" >View Clients</button>
-              </Link>
-            </div>
-          </div>
-          <FormBtn
+          <form>
+            <FormGroup>
+              <Label text="PO Number" />
+              <Input
+                name="PONum"
+                value={this.state.PONum}
+                onChange={this.handleInputChange}
+              // type="PONum"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label text="Design name" />
+              <Input
+                name="design"
+                value={this.state.design}
+                onChange={this.handleInputChange}
+              // type="design"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label text="Issue" />
+              <DropdownList
+                name="issue"
+                onChange={this.issueDropDown}
+                data={issues}
+              // type="issue"
+              />
+            </FormGroup>
+            {
+              this.state.issue === "Missing Garments"
+                ?
+                <div>
+                  <h3>What is missing?</h3>
+                  <hr></hr>
+                  <MissingGarmentInfo
+                  />
+                  {/* <FormGroup>
+                    <Label text="Reason" />
+                    <DropdownList
+                      name="reason"
+                      onChange={this.reasonDropDown}
+                      data={reasons}
+                    // type="issue"
+                    />
+                  </FormGroup> */}
+                </div>
+                :
+                ""
+            }
+          </form>
+          {/* <FormBtn
             text="Logout"
             onClick={this.logout}
             classes="btn-outline-success logoutBtn homeBtn"
-          />
+          /> */}
         </div>
       </div>
     );

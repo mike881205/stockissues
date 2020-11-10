@@ -9,9 +9,7 @@ import API from "./utils/API";
 // import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
-import ClientInput from "./pages/ClientInput"
 import "./index.css"
-import AOS from 'aos'
 import 'react-widgets/dist/css/react-widgets.css';
 
 
@@ -26,7 +24,6 @@ class App extends Component {
 
   componentDidMount() {
     this.isAuthorized();
-    AOS.init()
   }
 
   setClient = client => {
@@ -65,12 +62,6 @@ class App extends Component {
       <Router>
         <Route exact path="/">
           <Home logout={this.logout} />
-        </Route>
-        <Route exact path="/clientinput">
-          <ClientInput setClient={this.setClient} client={this.state.client}/>
-        </Route>
-        <Route exact path="/clients">
-
         </Route>
       </Router>
 
