@@ -26,10 +26,6 @@ class App extends Component {
     this.isAuthorized();
   }
 
-  setClient = client => {
-    this.setState({ client: client })
-  }
-
   isAuthorized = () => {
     API.isAuthorized()
       .then(res => {

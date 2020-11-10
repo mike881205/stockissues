@@ -26,7 +26,7 @@ class MissingGarmentInfo extends React.Component {
         const { name, value } = event.target;
         console.log(name, value)
 
-        let intVal = parseInt(value)
+        let numVal = value.replace(/[A-Za-z]/g, '')
 
         let sizeObj = {
             xSmall: this.state.size.xSmall,
@@ -40,40 +40,34 @@ class MissingGarmentInfo extends React.Component {
             fiveXL: this.state.size.fiveXL
         }
 
-        if (intVal.toString().length === value.length) {
-
-            switch (name) {
-                case "xSmall":
-                    sizeObj.xSmall = value
-                    break;
-                case "small":
-                    sizeObj.small = value
-                    break;
-                case "medium":
-                    sizeObj.medium = value
-                    break;
-                case "large":
-                    sizeObj.large = value
-                    break;
-                case "xLarge":
-                    sizeObj.xLarge = value
-                    break;
-                case "twoXL":
-                    sizeObj.twoXL = value
-                    break;
-                case "threeXL":
-                    sizeObj.threeXL = value
-                    break;
-                case "fourXL":
-                    sizeObj.fourXL = value
-                    break;
-                case "fiveXL":
-                    sizeObj.fiveXL = value
-                    break;
-            }
-        }
-        else {
-            console.log("String Found")
+        switch (name) {
+            case "xSmall":
+                sizeObj.xSmall = numVal
+                break;
+            case "small":
+                sizeObj.small = numVal
+                break;
+            case "medium":
+                sizeObj.medium = numVal
+                break;
+            case "large":
+                sizeObj.large = numVal
+                break;
+            case "xLarge":
+                sizeObj.xLarge = numVal
+                break;
+            case "twoXL":
+                sizeObj.twoXL = numVal
+                break;
+            case "threeXL":
+                sizeObj.threeXL = numVal
+                break;
+            case "fourXL":
+                sizeObj.fourXL = numVal
+                break;
+            case "fiveXL":
+                sizeObj.fiveXL = numVal
+                break;
         }
 
         this.setState({ size: sizeObj })
@@ -89,7 +83,6 @@ class MissingGarmentInfo extends React.Component {
                             name="xSmall"
                             value={this.state.size.xSmall}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -98,7 +91,6 @@ class MissingGarmentInfo extends React.Component {
                             name="small"
                             value={this.state.size.small}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -107,7 +99,6 @@ class MissingGarmentInfo extends React.Component {
                             name="medium"
                             value={this.state.size.medium}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -116,7 +107,6 @@ class MissingGarmentInfo extends React.Component {
                             name="large"
                             value={this.state.size.large}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -125,7 +115,6 @@ class MissingGarmentInfo extends React.Component {
                             name="xLarge"
                             value={this.state.size.xLarge}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -134,7 +123,6 @@ class MissingGarmentInfo extends React.Component {
                             name="twoXL"
                             value={this.state.size.twoXL}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -143,7 +131,6 @@ class MissingGarmentInfo extends React.Component {
                             name="threeXL"
                             value={this.state.size.threeXL}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -152,7 +139,6 @@ class MissingGarmentInfo extends React.Component {
                             name="fourXL"
                             value={this.state.size.fourXL}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                     <div className="col">
@@ -161,7 +147,6 @@ class MissingGarmentInfo extends React.Component {
                             name="fiveXL"
                             value={this.state.size.fiveXL}
                             onChange={this.sizeInputChange}
-                        type="integer"
                         />
                     </div>
                 </div>
