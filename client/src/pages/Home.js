@@ -26,9 +26,18 @@ class Home extends Component {
   handleInputChange = event => {
     const { name, value } = event.target;
     console.log(name, value)
-    this.setState({
-      [name]: value.trim()
-    });
+
+    if (name === "PONum") {
+      let POVal = value.replace(/[^0-9]+/g, "")
+      this.setState({
+        PONum: POVal.trim()
+      });
+    }
+    else {
+      this.setState({
+        [name]: value.trim()
+      });
+    }
   };
 
   issueDropDown = event => {
@@ -41,6 +50,15 @@ class Home extends Component {
         this.setState({ issue: event });
         break;
     }
+  }
+
+  setMissingState = (missing) => {
+    console.log(missing)
+    this.setState({missing: missing})
+  }
+
+  setReceivedState = (received) => {
+    this.setState({missing: received})
   }
 
   reasonDropDown = event => {
@@ -81,7 +99,6 @@ class Home extends Component {
                 name="PONum"
                 value={this.state.PONum}
                 onChange={this.handleInputChange}
-              // type="PONum"
               />
             </FormGroup>
             <FormGroup>
@@ -90,7 +107,6 @@ class Home extends Component {
                 name="design"
                 value={this.state.design}
                 onChange={this.handleInputChange}
-              // type="design"
               />
             </FormGroup>
             <FormGroup>
@@ -99,7 +115,6 @@ class Home extends Component {
                 name="issue"
                 onChange={this.issueDropDown}
                 data={issues}
-              // type="issue"
               />
             </FormGroup>
             {
@@ -109,6 +124,7 @@ class Home extends Component {
                   <h3>What is missing?</h3>
                   <hr></hr>
                   <MissingGarmentInfo
+                  setMissingState={this.setMissingState}
                   />
                   {/* <FormGroup>
                     <Label text="Reason" />
@@ -116,7 +132,7 @@ class Home extends Component {
                       name="reason"
                       onChange={this.reasonDropDown}
                       data={reasons}
-                    // type="issue"
+    
                     />
                   </FormGroup> */}
                 </div>

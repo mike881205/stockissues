@@ -22,11 +22,27 @@ class MissingGarmentInfo extends React.Component {
         }
     }
 
-    sizeInputChange = event => {
+    handleInputChange = event => {
         const { name, value } = event.target;
         console.log(name, value)
 
-        let numVal = value.replace(/[A-Za-z]/g, '')
+        if (name === "color") {
+            let colorVal = value.replace(/[^a-zA-Z ]/g, "")
+            this.setState({
+                color: colorVal.trim()
+            });
+        }
+        else {
+            this.setState({
+                [name]: value.trim()
+              });
+        }
+    };
+
+    sizeInputChange = event => {
+        const { name, value } = event.target;
+
+        let numVal = value.replace(/[^0-9]+/g, "")
 
         let sizeObj = {
             xSmall: this.state.size.xSmall,
@@ -42,40 +58,74 @@ class MissingGarmentInfo extends React.Component {
 
         switch (name) {
             case "xSmall":
-                sizeObj.xSmall = numVal
+                sizeObj.xSmall = numVal.trim()
                 break;
             case "small":
-                sizeObj.small = numVal
+                sizeObj.small = numVal.trim()
                 break;
             case "medium":
-                sizeObj.medium = numVal
+                sizeObj.medium = numVal.trim()
                 break;
             case "large":
-                sizeObj.large = numVal
+                sizeObj.large = numVal.trim()
                 break;
             case "xLarge":
-                sizeObj.xLarge = numVal
+                sizeObj.xLarge = numVal.trim()
                 break;
             case "twoXL":
-                sizeObj.twoXL = numVal
+                sizeObj.twoXL = numVal.trim()
                 break;
             case "threeXL":
-                sizeObj.threeXL = numVal
+                sizeObj.threeXL = numVal.trim()
                 break;
             case "fourXL":
-                sizeObj.fourXL = numVal
+                sizeObj.fourXL = numVal.trim()
                 break;
             case "fiveXL":
-                sizeObj.fiveXL = numVal
+                sizeObj.fiveXL = numVal.trim()
                 break;
         }
 
         this.setState({ size: sizeObj })
+
+        this.props.setMissingState(this.state)
     }
 
     render() {
         return (
             <FormGroup>
+                <div className="row">
+                    <div className="col">
+                        <FormGroup>
+                            <Label text="Brand" />
+                            <Input
+                                name="brand"
+                                value={this.state.brand}
+                                onChange={this.handleInputChange}
+                            />
+                        </FormGroup>
+                    </div>
+                    <div className="col">
+                        <FormGroup>
+                            <Label text="Style Number" />
+                            <Input
+                                name="style"
+                                value={this.state.style}
+                                onChange={this.handleInputChange}
+                            />
+                        </FormGroup>
+                    </div>
+                    <div className="col">
+                        <FormGroup>
+                            <Label text="Color" />
+                            <Input
+                                name="color"
+                                value={this.state.color}
+                                onChange={this.handleInputChange}
+                            />
+                        </FormGroup>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col">
                         <Label text="XS" />
