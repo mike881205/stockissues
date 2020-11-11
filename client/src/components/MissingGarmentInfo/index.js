@@ -35,8 +35,9 @@ class MissingGarmentInfo extends React.Component {
         else {
             this.setState({
                 [name]: value.trim()
-              });
+            });
         }
+
     };
 
     sizeInputChange = event => {
@@ -87,8 +88,6 @@ class MissingGarmentInfo extends React.Component {
         }
 
         this.setState({ size: sizeObj })
-
-        this.props.setMissingState(this.state)
     }
 
     render() {

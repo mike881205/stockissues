@@ -18,6 +18,8 @@ class Home extends Component {
     design: "",
     issue: "",
     reason: "",
+    topInput: false,
+    missingInput: false,
     receivedInput: false,
     missing: "",
     received: ""
@@ -29,14 +31,17 @@ class Home extends Component {
 
     if (name === "PONum") {
       let POVal = value.replace(/[^0-9]+/g, "")
-      this.setState({
-        PONum: POVal.trim()
-      });
+      this.setState({ PONum: POVal.trim() });
     }
     else {
-      this.setState({
-        [name]: value.trim()
-      });
+      this.setState({ [name]: value.trim() });
+    }
+
+    if (this.state.PONum.length === 5 && this.state.design && this.state.issue) {
+      this.setState({ topInput: true })
+    }
+    else {
+      this.setState({ topInput: false })
     }
   };
 
@@ -53,12 +58,11 @@ class Home extends Component {
   }
 
   setMissingState = (missing) => {
-    console.log(missing)
-    this.setState({missing: missing})
+    this.setState({ missing: missing })
   }
 
   setReceivedState = (received) => {
-    this.setState({missing: received})
+    this.setState({ missing: received })
   }
 
   reasonDropDown = event => {
@@ -82,10 +86,6 @@ class Home extends Component {
     }
   }
 
-  // componentDidMount() {
-
-  // }
-
   render() {
     return (
       <div className="container" align="center">
@@ -99,6 +99,7 @@ class Home extends Component {
                 name="PONum"
                 value={this.state.PONum}
                 onChange={this.handleInputChange}
+                maxLength={5}
               />
             </FormGroup>
             <FormGroup>
@@ -124,27 +125,34 @@ class Home extends Component {
                   <h3>What is missing?</h3>
                   <hr></hr>
                   <MissingGarmentInfo
-                  setMissingState={this.setMissingState}
+                    setMissingState={this.setMissingState}
                   />
-                  {/* <FormGroup>
-                    <Label text="Reason" />
-                    <DropdownList
-                      name="reason"
-                      onChange={this.reasonDropDown}
-                      data={reasons}
-    
-                    />
-                  </FormGroup> */}
+                  <FormBtn
+                    text="Next"
+                    classes="btn-success logoutBtn homeBtn"
+                  />
+                </div>
+                :
+                ""
+            }
+            {
+              this.state.issue === "Extra Garments Received - Packing Slip is Correct, No Missing Garments"
+                ?
+                <div>
+                  <h3>What was Received?</h3>
+                  <hr></hr>
+                  <ReceivedGarmentInfo
+                    setReceivedState={this.setReceivedState}
+                  />
+                  <FormBtn
+                    text="Next"
+                    classes="btn-success logoutBtn homeBtn"
+                  />
                 </div>
                 :
                 ""
             }
           </form>
-          {/* <FormBtn
-            text="Logout"
-            onClick={this.logout}
-            classes="btn-outline-success logoutBtn homeBtn"
-          /> */}
         </div>
       </div>
     );
@@ -155,3 +163,13 @@ class Home extends Component {
 
 
 export default Home;
+
+{/* <FormGroup>
+                    <Label text="Reason" />
+                    <DropdownList
+                      name="reason"
+                      onChange={this.reasonDropDown}
+                      data={reasons}
+    
+                    />
+                  </FormGroup> */}
