@@ -10,40 +10,103 @@ class MissingGarmentInfo extends React.Component {
         style: "",
         color: "",
         size: {
-            xSmall: "",
-            small: "",
-            medium: "",
-            large: "",
-            xLarge: "",
-            twoXL: "",
-            threeXL: "",
-            fourXL: "",
-            fiveXL: ""
+            xSmall: 0,
+            small: 0,
+            medium: 0,
+            large: 0,
+            xLarge: 0,
+            twoXL: 0,
+            threeXL: 0,
+            fourXL: 0,
+            fiveXL: 0,
         }
     }
 
     handleInputChange = event => {
+
         const { name, value } = event.target;
-        console.log(name, value)
 
         if (name === "color") {
+
             let colorVal = value.replace(/[^a-zA-Z ]/g, "")
-            this.setState({
-                color: colorVal.trim()
-            });
+
+            this.setState({ color: colorVal.trim() });
         }
         else {
-            this.setState({
-                [name]: value.trim()
-            });
+            this.setState({ [name]: value.trim() });
         }
 
+        // let sizeArray = [
+        //     this.state.size.xSmall,
+        //     this.state.size.small,
+        //     this.state.size.medium,
+        //     this.state.size.large,
+        //     this.state.size.xLarge,
+        //     this.state.size.twoXL,
+        //     this.state.size.threeXL,
+        //     this.state.size.fourXL,
+        //     this.state.size.fiveXL
+        // ]
+
+        // let greaterThanZero = false
+        // let brandStyleColor = false
+        // let brand = this.state.brand
+        // let style = this.state.style
+        // let color = this.state.color
+
+        // if (name === "color") {
+
+        //     let colorVal = value.replace(/[^a-zA-Z ]/g, "")
+
+        //     if (value.length > 0) {
+        //         this.setState({ color: colorVal.trim() });
+        //     }
+        //     else {
+        //         this.setState({ color: "" });
+        //     }
+        // }
+        // else {
+
+        //     if (value.length > 0) {
+        //         this.setState({ [name]: value.trim() });
+        //     }
+        //     else {
+        //         this.setState({ [name]: "" });
+        //     }
+        // }
+
+        // for (let i = 0; i < sizeArray.length; i++) {
+
+        //     let size = sizeArray[i]
+
+        //     if (size > 0) {
+        //         greaterThanZero = true
+        //         console.log("Greater than Zero")
+        //     }
+        // }
+
+        // if (brand !== "" && style !== "" && color !== "") {
+        //     brandStyleColor = true
+
+        //     console.log("brandStyleColor")
+        // }
+
+        // if (greaterThanZero && brandStyleColor) {
+
+        //     console.log("Info Complete")
+
+        //     this.props.setMissingState(this.state)
+        // }
+        // else {
+        //     console.log("Info Inomplete")
+        // }
     };
 
     sizeInputChange = event => {
+
         const { name, value } = event.target;
 
-        let numVal = value.replace(/[^0-9]+/g, "")
+        let numVal = parseInt(value)
 
         let sizeObj = {
             xSmall: this.state.size.xSmall,
@@ -59,35 +122,80 @@ class MissingGarmentInfo extends React.Component {
 
         switch (name) {
             case "xSmall":
-                sizeObj.xSmall = numVal.trim()
+                sizeObj.xSmall = numVal
                 break;
             case "small":
-                sizeObj.small = numVal.trim()
+                sizeObj.small = numVal
                 break;
             case "medium":
-                sizeObj.medium = numVal.trim()
+                sizeObj.medium = numVal
                 break;
             case "large":
-                sizeObj.large = numVal.trim()
+                sizeObj.large = numVal
                 break;
             case "xLarge":
-                sizeObj.xLarge = numVal.trim()
+                sizeObj.xLarge = numVal
                 break;
             case "twoXL":
-                sizeObj.twoXL = numVal.trim()
+                sizeObj.twoXL = numVal
                 break;
             case "threeXL":
-                sizeObj.threeXL = numVal.trim()
+                sizeObj.threeXL = numVal
                 break;
             case "fourXL":
-                sizeObj.fourXL = numVal.trim()
+                sizeObj.fourXL = numVal
                 break;
             case "fiveXL":
-                sizeObj.fiveXL = numVal.trim()
+                sizeObj.fiveXL = numVal
                 break;
         }
 
         this.setState({ size: sizeObj })
+
+        // let greaterThanZero = false
+        // let brandStyleColor = false
+
+        // let brand = this.state.brand
+        // let style = this.state.style
+        // let color = this.state.color
+
+        // let sizeArray = [
+        //     sizeObj.xSmall,
+        //     sizeObj.small,
+        //     sizeObj.medium,
+        //     sizeObj.large,
+        //     sizeObj.xLarge,
+        //     sizeObj.twoXL,
+        //     sizeObj.threeXL,
+        //     sizeObj.fourXL,
+        //     sizeObj.fiveXL
+        // ]
+
+        // for (let i = 0; i < sizeArray.length; i++) {
+
+        //     let size = sizeArray[i]
+
+        //     if (size > 0) {
+        //         greaterThanZero = true
+        //         console.log("greaterThanZero")
+        //     }
+        // }
+
+        // if (brand !== "" && style !== "" && color !== "") {
+        //     brandStyleColor = true
+
+        //     console.log("brandStyleColor")
+        // }
+
+        // if (greaterThanZero && brandStyleColor) {
+
+        //     console.log("Info Complete")
+
+        //     this.props.setMissingState(this.state)
+        // }
+        // else {
+        //     console.log("Info Inomplete")
+        // }
     }
 
     render() {
@@ -132,6 +240,11 @@ class MissingGarmentInfo extends React.Component {
                             name="xSmall"
                             value={this.state.size.xSmall}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -140,6 +253,11 @@ class MissingGarmentInfo extends React.Component {
                             name="small"
                             value={this.state.size.small}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -148,6 +266,11 @@ class MissingGarmentInfo extends React.Component {
                             name="medium"
                             value={this.state.size.medium}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -156,6 +279,11 @@ class MissingGarmentInfo extends React.Component {
                             name="large"
                             value={this.state.size.large}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -164,6 +292,11 @@ class MissingGarmentInfo extends React.Component {
                             name="xLarge"
                             value={this.state.size.xLarge}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -172,6 +305,11 @@ class MissingGarmentInfo extends React.Component {
                             name="twoXL"
                             value={this.state.size.twoXL}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -180,6 +318,11 @@ class MissingGarmentInfo extends React.Component {
                             name="threeXL"
                             value={this.state.size.threeXL}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -188,6 +331,11 @@ class MissingGarmentInfo extends React.Component {
                             name="fourXL"
                             value={this.state.size.fourXL}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                     <div className="col">
@@ -196,6 +344,11 @@ class MissingGarmentInfo extends React.Component {
                             name="fiveXL"
                             value={this.state.size.fiveXL}
                             onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
                         />
                     </div>
                 </div>
