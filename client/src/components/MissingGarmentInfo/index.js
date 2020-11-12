@@ -19,7 +19,8 @@ class MissingGarmentInfo extends React.Component {
             threeXL: 0,
             fourXL: 0,
             fiveXL: 0,
-        }
+        },
+        hats: 0
     }
 
     handleInputChange = event => {
@@ -120,6 +121,8 @@ class MissingGarmentInfo extends React.Component {
             fiveXL: this.state.size.fiveXL
         }
 
+        let hats = this.state.hats
+
         switch (name) {
             case "xSmall":
                 sizeObj.xSmall = numVal
@@ -148,9 +151,15 @@ class MissingGarmentInfo extends React.Component {
             case "fiveXL":
                 sizeObj.fiveXL = numVal
                 break;
+            case "hats":
+                hats = numVal
+                break;
         }
 
-        this.setState({ size: sizeObj })
+        this.setState({ 
+            size: sizeObj,
+            hats: hats 
+        })
 
         // let greaterThanZero = false
         // let brandStyleColor = false
@@ -343,6 +352,19 @@ class MissingGarmentInfo extends React.Component {
                         <Input
                             name="fiveXL"
                             value={this.state.size.fiveXL}
+                            onChange={this.sizeInputChange}
+                            type="number"
+                            min={0}
+                            onKeyDown={(event) => {
+                                event.preventDefault();
+                            }}
+                        />
+                    </div>
+                    <div className="col">
+                        <Label text="Hats" />
+                        <Input
+                            name="hats"
+                            value={this.state.hats}
                             onChange={this.sizeInputChange}
                             type="number"
                             min={0}
