@@ -276,35 +276,6 @@ class Home extends Component {
                   </div>
                 :
                 ""
-
-              // <div>
-              //   <h3>What is missing?</h3>
-              //   <hr></hr>
-              //   <MissingGarmentInfo
-              //     handleInputChange={this.handleInputChange}
-              //     brand={this.state.missing.brand}
-              //     style={this.state.missing.style}
-              //     color={this.state.missing.color}
-              //     xSmall={this.state.missing.xSmall}
-              //     small={this.state.missing.small}
-              //     medium={this.state.missing.medium}
-              //     large={this.state.missing.large}
-              //     xLarge={this.state.missing.xLarge}
-              //     twoXL={this.state.missing.twoXL}
-              //     threeXL={this.state.missing.threeXL}
-              //     fourXL={this.state.missing.fourXL}
-              //     fiveXL={this.state.missing.fiveXL}
-              //     hats={this.state.missing.hats}
-              //   />
-              //   <FormBtn
-              //     text="Next"
-              //     classes="btn-success logoutBtn homeBtn"
-              //     // disabled={(!this.state.PONum || !this.state.design || !this.state.issue || !this.state.missing.brand || !this.state.missing.style || !this.state.missing.color) && (this.state.missing.xSmall === 0 && this.state.missing.small === 0 && this.state.missing.medium === 0 && this.state.missing.large === 0 && this.state.missing.xLarge === 0 && this.state.missing.twoXL === 0 && this.state.missing.threeXL === 0 && this.state.missing.fourXL === 0 && this.state.missing.fiveXL === 0) ? "" : "disabled"}
-              //     disabled={true}
-              //   />
-              // </div>
-              // :
-              // ""
             }
             {
               this.state.issue === "Extra Garments Received - Packing Slip is Correct, No Missing Garments" ?
