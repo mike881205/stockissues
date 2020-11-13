@@ -3,7 +3,7 @@ import { FormGroup, Input, Label, Small, FormBtn } from "../Form";
 import { DropdownList } from "react-widgets"
 // import "./style.css"
 
-class MissingGarmentInfo extends React.Component {
+class GarmentInfo extends React.Component {
 
     render() {
         return (
@@ -177,4 +177,4 @@ class MissingGarmentInfo extends React.Component {
     }
 }
 
-export default MissingGarmentInfo
+export default GarmentInfo
