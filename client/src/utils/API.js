@@ -16,28 +16,13 @@ export default {
   availableUN: function (username) {
     return axios.get("/api/user/?username=" + username);
   },
-  inputQuestion: function(section, question) {
-    return axios.post("/api/inputquestion", section, question)
+  addPOInfo: function(PONum, design, issue) {
+    return axios.post("/api/addPOInfo", PONum, design, issue)
   },
-  addClient: function(firstName, lastName, email, phone, streetAddress, aptUnitNum, city, state, zip, audit, dwelling, gateCode) {
-    return axios.post("/api/addClient", firstName, lastName, email, phone, streetAddress, aptUnitNum, city, state, zip, audit, dwelling, gateCode)
+  addMissingInfo: function(brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) {
+    return axios.post("/api/addMissingInfo", brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL)
   },
-  addMember: function(name, relationship, age, ClientId) {
-    return axios.post("/api/addMember", name, relationship, age, ClientId)
-  },
-  getSections: function() {
-    return axios.get("/api/getSections")
-  },
-  getClients: function() {
-    return axios.get("/api/getClients")
-  },
-  submitAssessment: function(ClientId, SectionId, QuestionId, response, observation, comment) {
-    return axios.post("/api/submitAssessment", ClientId, SectionId, QuestionId, response, observation, comment)
-  },
-  getClientResults: function(ClientId) {
-    return axios.get("/api/getClientResults/" + ClientId)
-  },
-  getResultSections: function(SectionId) {
-    return axios.get("/api/getResultSections/" + SectionId)
+  addReceivedInfo: function(brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) {
+    return axios.post("/api/addReceivedInfo", brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL)
   }
 };

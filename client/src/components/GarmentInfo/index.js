@@ -158,7 +158,7 @@ class GarmentInfo extends React.Component {
                             }}
                         />
                     </div>
-                    <div className="col">
+                    {/* <div className="col">
                         <Label text="Hats" />
                         <Input
                             name="hats"
@@ -170,7 +170,7 @@ class GarmentInfo extends React.Component {
                                 event.preventDefault();
                             }}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </FormGroup>
         );

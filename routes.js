@@ -51,137 +51,61 @@ router.get("/api/authorized", isAuthenticated, function (req, res) {
   res.json(req.user);
 });
 
-router.post("/api/inputquestion", isAuthenticated, function (req, res) {
-  db.Question.create({
-    section: req.body.section,
-    question: req.body.question
+router.post("/api/addPOInfo", function (req, res) {
+  db.POInfo.create({
+    PONum: req.body.PONum,
+    design: req.body.question,
+    issue: req.body.issue
   }).then(function () {
-    res.json("question added");
+    res.json("PO Info Added");
   }).catch(function (err) {
     console.log(err);
     res.json(err);
   });
 })
 
-// router.post("/api/addClient", isAuthenticated, function (req, res) {
-//   db.Client.create({
-//     firstName: req.body.firstName,
-//     lastName: req.body.lastName,
-//     email: req.body.email,
-//     phone: req.body.phone,
-//     streetAddress: req.body.streetAddress,
-//     aptUnitNum: req.body.aptUnitNum,
-//     city: req.body.city,
-//     state: req.body.state,
-//     zip: req.body.zip,
-//     audit: req.body.audit,
-//     dwelling: req.body.dwelling,
-//     gateCode: req.body.gateCode
-//   }).then(client => res.json(client)
-//   ).catch(function (err) {
-//     console.log(err);
-//     res.json(err);
-//   });
-// })
-
-router.post("/api/addClient", function (req, res) {
-  db.Client.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phone: req.body.phone,
-    streetAddress: req.body.streetAddress,
-    aptUnitNum: req.body.aptUnitNum,
-    city: req.body.city,
-    state: req.body.state,
-    zip: req.body.zip,
-    audit: req.body.audit,
-    dwelling: req.body.dwelling,
-    gateCode: req.body.gateCode
-  }).then(client => res.json(client)
-  ).catch(function (err) {
+router.post("/api/addMissingInfo", function (req, res) {
+  db.Missing.create({
+    brand: req.body.brand,
+    style: req.body.style,
+    color: req.body.color,
+    xSmall: req.body.xSmall,
+    small: req.body.small,
+    medium: req.body.medium,
+    large: req.body.large,
+    xlarge: req.body.xlarge,
+    twoXL: req.body.twoXL,
+    threeXL: req.body.threeXL,
+    fourXL: req.body.fourXL,
+    fiveXL: req.body.fiveXL
+  }).then(function () {
+    res.json("Missing Info Added");
+  }).catch(function (err) {
     console.log(err);
     res.json(err);
   });
 })
 
-router.post("/api/addMember", function (req, res) {
-  db.HouseMember.create({
-    name: req.body.name,
-    relationship: req.body.relationship,
-    age: req.body.age,
-    ClientId: req.body.ClientId
-  }).then(member => res.json(member)
-  ).catch(function (err) {
+router.post("/api/addReceivedInfo", function (req, res) {
+  db.Received.create({
+    brand: req.body.brand,
+    style: req.body.style,
+    color: req.body.color,
+    xSmall: req.body.xSmall,
+    small: req.body.small,
+    medium: req.body.medium,
+    large: req.body.large,
+    xlarge: req.body.xlarge,
+    twoXL: req.body.twoXL,
+    threeXL: req.body.threeXL,
+    fourXL: req.body.fourXL,
+    fiveXL: req.body.fiveXL
+  }).then(function () {
+    res.json("Received Info Added");
+  }).catch(function (err) {
     console.log(err);
     res.json(err);
   });
-})
-
-router.get("/api/getSections", isAuthenticated, function (req, res) {
-  db.Section.findAll({ include: [db.Question] })
-    .then(dbSections => res.json(dbSections))
-    .catch(err => {
-      console.log(err);
-      res.json(err);
-    });
-});
-
-router.get("/api/getClients", isAuthenticated, function (req, res) {
-  db.Client.findAll({order: [["createdAt", "DESC"]]})
-    .then(dbClients => res.json(dbClients))
-    .catch(err => {
-      console.log(err);
-      res.json(err);
-    });
-})
-
-router.post("/api/submitAssessment", isAuthenticated, function (req, res) {
-  db.Response.create({
-    ClientId: req.body.ClientId,
-    SectionId: req.body.SectionId,
-    QuestionId: req.body.QuestionId,
-    response: req.body.response,
-    observation: req.body.observation,
-    comment: req.body.comment
-  }).then(dbResults => res.json(dbResults))
-    .catch(function (err) {
-      console.log(err);
-      res.json(err);
-    });
-})
-
-router.get("/api/getClientResults/:id", isAuthenticated, function (req, res) {
-  db.Response.findAll({
-    include:[
-      {
-        model: db.Section,
-        include: [db.Question]
-      }
-    ],
-    where: {
-      ClientId: req.params.id
-    },
-    order: [["SectionId", "ASC"]]
-  })
-    .then(dbResults => res.json(dbResults))
-    .catch(err => {
-      console.log(err);
-      res.json(err);
-    });
-})
-
-router.get("/api/getResultSections/:id", isAuthenticated, function (req, res) {
-  db.Section.findAll({
-    where: {
-      id: req.params.id
-    }
-  })
-    .then(dbResults => res.json(dbResults))
-    .catch(err => {
-      console.log(err);
-      res.json(err);
-    });
 })
 
 module.exports = router;

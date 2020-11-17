@@ -50,6 +50,18 @@ class Home extends Component {
     buttonText: ""
   }
 
+  // addPOInfo = (PONum, design, issue) => {
+
+  // }
+
+  // addMissingInfo = (brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) => {
+
+  // }
+
+  // addReceivedInfo = (brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) => {
+
+  // }
+
   handleInputChange = event => {
 
     const { name, value } = event.target;
@@ -201,18 +213,33 @@ class Home extends Component {
   nextSubmitButton = event => {
 
     let buttonText = this.state.buttonText
+    let issue = this.state.issue
 
-    switch (buttonText) {
-      case "Submit":
-        event.preventDefault()
-        alert("Submit")
+    if (buttonText === "Next") {
+      this.setState({
+        showReceivedInput: true,
+        buttonText: "Submit"
+      })
+    }
+    else {
+      event.preventDefault()
+      // this.addPOInfo()
+      switch (issue) {
+        case "Missing Garments - Wrong or Extra Garments Received":
+        // this.addMissingInfo()
+        // this.addReceivedInfo()
         break;
-      case "Next":
-        this.setState({ 
-          showReceivedInput: true,
-          buttonText: "Submit" 
-        })
+        case "Received Damaged/Stained/Defective Garments":
+        // this.addMissingInfo()
+        // this.addReceivedInfo()
         break;
+        case "Missing Garments - Packing Slip is Correct, No Extras":
+        // this.addMissingInfo()
+        break;
+        case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
+        // this.addReceivedInfo()
+        break;
+      }
     }
   }
 

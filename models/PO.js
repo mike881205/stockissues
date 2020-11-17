@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    let PO = sequelize.define("PO", {
+    let POInfo = sequelize.define("POInfo", {
         PONum: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -12,28 +12,20 @@ module.exports = function (sequelize, DataTypes) {
         issue: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        complete: {
-            type: DataTypes.BOOLEAN,
-            value: false,
-            allowNull: false
-        },        
-        RA: {
-            type: DataTypes.STRING,
         }
     });
 
-    PO.associate = function (models) {
-        PO.hasMany(models.Missing, {
+    POInfo.associate = function (models) {
+        POInfo.hasMany(models.Missing, {
             onDelete: "cascade"
         });
     };
 
-    PO.associate = function (models) {
-        PO.hasMany(models.Received, {
+    POInfo.associate = function (models) {
+        POInfo.hasMany(models.Received, {
             onDelete: "cascade"
         });
     };
 
-    return PO;
+    return POInfo;
 };
