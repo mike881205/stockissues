@@ -23,7 +23,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.isAuthorized();
+    // this.isAuthorized();
   }
 
   isAuthorized = () => {

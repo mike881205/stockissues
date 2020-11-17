@@ -47,9 +47,9 @@ router.get("/api/user", function (req, res) {
   }
 });
 
-router.get("/api/authorized", isAuthenticated, function (req, res) {
-  res.json(req.user);
-});
+// router.get("/api/authorized", isAuthenticated, function (req, res) {
+//   res.json(req.user);
+// });
 
 router.post("/api/addPOInfo", function (req, res) {
   db.POInfo.create({

@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Received.associate = function (models) {
-        Received.belongsTo(models.PO, {
+        Received.belongsTo(models.POInfo, {
             onDelete: "cascade"
         });
     };

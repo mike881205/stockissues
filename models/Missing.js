@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Missing.associate = function (models) {
-        Missing.belongsTo(models.PO, {
+        Missing.belongsTo(models.POInfo, {
             onDelete: "cascade"
         });
     };
