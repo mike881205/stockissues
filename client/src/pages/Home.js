@@ -50,9 +50,18 @@ class Home extends Component {
     buttonText: ""
   }
 
-  // addPOInfo = (PONum, design, issue) => {
+  addPOInfo = () => {
 
-  // }
+    API.addPOInfo({
+      PONum: this.state.PONum,
+      design: this.state.design,
+      issue: this.state.issue
+    })
+      .then(res => {
+        console.log(res)
+        console.log(res.data)
+      })
+  }
 
   // addMissingInfo = (brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) => {
 
@@ -64,9 +73,41 @@ class Home extends Component {
 
   handleInputChange = event => {
 
-    const { name, value } = event.target;
+    console.log(event.target)
 
-    // console.table(name, value)
+    const { name, value, id } = event.target;
+
+    console.table(name, value, id)
+
+    let missingObj = {
+      brand: this.state.missingInfo.brand,
+      style: this.state.missingInfo.style,
+      color: this.state.missingInfo.color,
+      xSmall: this.state.missingInfo.xSmall,
+      small: this.state.missingInfo.small,
+      medium: this.state.missingInfo.medium,
+      large: this.state.missingInfo.large,
+      xLarge: this.state.missingInfo.xLarge,
+      twoXL: this.state.missingInfo.twoXL,
+      threeXL: this.state.missingInfo.threeXL,
+      fourXL: this.state.missingInfo.fourXL,
+      fiveXL: this.state.missingInfo.fiveXL
+    }
+
+    let receivedObj = {
+      brand: this.state.receivedInfo.brand,
+      style: this.state.receivedInfo.style,
+      color: this.state.receivedInfo.color,
+      xSmall: this.state.receivedInfo.xSmall,
+      small: this.state.receivedInfo.small,
+      medium: this.state.receivedInfo.medium,
+      large: this.state.receivedInfo.large,
+      xLarge: this.state.receivedInfo.xLarge,
+      twoXL: this.state.receivedInfo.twoXL,
+      threeXL: this.state.receivedInfo.threeXL,
+      fourXL: this.state.receivedInfo.fourXL,
+      fiveXL: this.state.receivedInfo.fiveXL
+    }
 
     let numVal = parseInt(value)
     let POVal = value.replace(/[^0-9]+/g, "")
@@ -79,99 +120,120 @@ class Home extends Component {
       case "design":
         this.setState({ design: value.trim() });
         break;
-      case "brand":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.brand = value.trim()
-          return { missing }
-        })
-        break;
-      case "style":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.style = value.trim()
-          return { missing }
-        })
-        break;
-      case "color":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.color = colorVal.trim()
-          return { missing }
-        })
-        break;
-      case "xSmall":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.xSmall = numVal
-          return { missing }
-        })
-        break;
-      case "small":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.small = numVal
-          return { missing }
-        })
-        break;
-      case "medium":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.medium = numVal
-          return { missing }
-        })
-        break;
-      case "large":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.large = numVal
-          return { missing }
-        })
-        break;
-      case "xLarge":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.xLarge = numVal
-          return { missing }
-        })
-        break;
-      case "twoXL":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.twoXL = numVal
-          return { missing }
-        })
-        break;
-      case "threeXL":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.threeXL = numVal
-          return { missing }
-        })
-        break;
-      case "fourXL":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.fourXL = numVal
-          return { missing }
-        })
-        break;
-      case "fiveXL":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.fiveXL = numVal
-          return { missing }
-        })
-        break;
-      case "hats":
-        this.setState(prevState => {
-          let missing = Object.assign({}, prevState.missing);
-          missing.hats = numVal
-          return { missing }
-        })
-        break;
     }
 
+    if (id === "missing") {
+      switch (name) {
+        case "brand":
+          missingObj.brand = value;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "style":
+          missingObj.style = value;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "color":
+          missingObj.color = colorVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "xSmall":
+          missingObj.xSmall = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "small":
+          missingObj.small = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "medium":
+          missingObj.medium = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "large":
+          missingObj.large = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "xLarge":
+          missingObj.xLarge = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "twoXL":
+          missingObj.twoXL = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "threeXL":
+          missingObj.threeXL = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "fourXL":
+          missingObj.fourXL = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        case "fiveXL":
+          missingObj.fiveXL = numVal;
+          this.setState({ missingInfo: missingObj });
+          break;
+        // case "hats":
+        //   missingObj.hats = numVal;
+        //   this.setState({ missingInfo: missingObj });
+        //   break;
+      }
+    }
+    else if (id === "received") {
+      switch (name) {
+        case "brand":
+          receivedObj.brand = value;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "style":
+          receivedObj.style = value;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "color":
+          receivedObj.color = colorVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "xSmall":
+          receivedObj.xSmall = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "small":
+          receivedObj.small = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "medium":
+          receivedObj.medium = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "large":
+          receivedObj.large = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "xLarge":
+          receivedObj.xLarge = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "twoXL":
+          receivedObj.twoXL = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "threeXL":
+          receivedObj.threeXL = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "fourXL":
+          receivedObj.fourXL = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        case "fiveXL":
+          receivedObj.fiveXL = numVal;
+          this.setState({ receivedInfo: receivedObj });
+          break;
+        // case "hats":
+        //   receivedObj.hats = numVal;
+        //   this.setState({ receivedInfo: receivedObj });
+        //   break;
+      }
+    }
   };
 
   dropDownChange = event => {
@@ -223,23 +285,23 @@ class Home extends Component {
     }
     else {
       event.preventDefault()
-      // this.addPOInfo()
-      switch (issue) {
-        case "Missing Garments - Wrong or Extra Garments Received":
-        // this.addMissingInfo()
-        // this.addReceivedInfo()
-        break;
-        case "Received Damaged/Stained/Defective Garments":
-        // this.addMissingInfo()
-        // this.addReceivedInfo()
-        break;
-        case "Missing Garments - Packing Slip is Correct, No Extras":
-        // this.addMissingInfo()
-        break;
-        case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
-        // this.addReceivedInfo()
-        break;
-      }
+      this.addPOInfo()
+      // switch (issue) {
+      //   case "Missing Garments - Wrong or Extra Garments Received":
+      //   // this.addMissingInfo()
+      //   // this.addReceivedInfo()
+      //   break;
+      //   case "Received Damaged/Stained/Defective Garments":
+      //   // this.addMissingInfo()
+      //   // this.addReceivedInfo()
+      //   break;
+      //   case "Missing Garments - Packing Slip is Correct, No Extras":
+      //   // this.addMissingInfo()
+      //   break;
+      //   case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
+      //   // this.addReceivedInfo()
+      //   break;
+      // }
     }
   }
 
@@ -298,7 +360,8 @@ class Home extends Component {
                           threeXL={this.state.missingInfo.threeXL}
                           fourXL={this.state.missingInfo.fourXL}
                           fiveXL={this.state.missingInfo.fiveXL}
-                          hats={this.state.missingInfo.hats}
+                          // hats={this.state.missingInfo.hats}
+                          id={"missing"}
                         />
                         <FormBtn
                           text={this.state.buttonText}
@@ -324,7 +387,8 @@ class Home extends Component {
                           threeXL={this.state.missingInfo.threeXL}
                           fourXL={this.state.missingInfo.fourXL}
                           fiveXL={this.state.missingInfo.fiveXL}
-                          hats={this.state.missingInfo.hats}
+                          // hats={this.state.missingInfo.hats}
+                          id={"missing"}
                         />
                         <hr></hr>
                         <h3>What was received?</h3>
@@ -344,6 +408,7 @@ class Home extends Component {
                           fourXL={this.state.receivedInfo.fourXL}
                           fiveXL={this.state.receivedInfo.fiveXL}
                           hats={this.state.receivedInfo.hats}
+                          id={"received"}
                         />
                         <FormBtn
                           text={this.state.buttonText}
@@ -356,20 +421,21 @@ class Home extends Component {
                       <h3>What is missing?</h3>
                       <hr></hr>
                       <GarmentInfo
-                        handleInputChange={this.handleInputChange}
-                        brand={this.state.missingInfo.brand}
-                        style={this.state.missingInfo.style}
-                        color={this.state.missingInfo.color}
-                        xSmall={this.state.missingInfo.xSmall}
-                        small={this.state.missingInfo.small}
-                        medium={this.state.missingInfo.medium}
-                        large={this.state.missingInfo.large}
-                        xLarge={this.state.missingInfo.xLarge}
-                        twoXL={this.state.missingInfo.twoXL}
-                        threeXL={this.state.missingInfo.threeXL}
-                        fourXL={this.state.missingInfo.fourXL}
-                        fiveXL={this.state.missingInfo.fiveXL}
-                        hats={this.state.missingInfo.hats}
+                          handleInputChange={this.handleInputChange}
+                          brand={this.state.missingInfo.brand}
+                          style={this.state.missingInfo.style}
+                          color={this.state.missingInfo.color}
+                          xSmall={this.state.missingInfo.xSmall}
+                          small={this.state.missingInfo.small}
+                          medium={this.state.missingInfo.medium}
+                          large={this.state.missingInfo.large}
+                          xLarge={this.state.missingInfo.xLarge}
+                          twoXL={this.state.missingInfo.twoXL}
+                          threeXL={this.state.missingInfo.threeXL}
+                          fourXL={this.state.missingInfo.fourXL}
+                          fiveXL={this.state.missingInfo.fiveXL}
+                          // hats={this.state.missingInfo.hats}
+                          id={"missing"}
                       />
                       <FormBtn
                         text={this.state.buttonText}
@@ -397,6 +463,7 @@ class Home extends Component {
                       fourXL={this.state.receivedInfo.fourXL}
                       fiveXL={this.state.receivedInfo.fiveXL}
                       hats={this.state.receivedInfo.hats}
+                      id={"received"}
                     />
                     <FormBtn
                       text={this.state.buttonText}

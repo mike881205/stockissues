@@ -16,6 +16,7 @@ class GarmentInfo extends React.Component {
                                 name="brand"
                                 value={this.props.brand}
                                 onChange={this.props.handleInputChange}
+                                id={this.props.id}
                             />
                         </FormGroup>
                     </div>
@@ -26,6 +27,7 @@ class GarmentInfo extends React.Component {
                                 name="style"
                                 value={this.props.style}
                                 onChange={this.props.handleInputChange}
+                                id={this.props.id}
                             />
                         </FormGroup>
                     </div>
@@ -36,6 +38,7 @@ class GarmentInfo extends React.Component {
                                 name="color"
                                 value={this.props.color}
                                 onChange={this.props.handleInputChange}
+                                id={this.props.id}
                             />
                         </FormGroup>
                     </div>
@@ -52,6 +55,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -65,6 +69,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -78,6 +83,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -91,6 +97,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -104,6 +111,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -117,6 +125,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -130,6 +139,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -143,6 +153,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     <div className="col">
@@ -156,6 +167,7 @@ class GarmentInfo extends React.Component {
                             onKeyDown={(event) => {
                                 event.preventDefault();
                             }}
+                            id={this.props.id}
                         />
                     </div>
                     {/* <div className="col">

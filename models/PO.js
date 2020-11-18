@@ -1,7 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     let POInfo = sequelize.define("POInfo", {
         PONum: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
             len: [5]
         },
