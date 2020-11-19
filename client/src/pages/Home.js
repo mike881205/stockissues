@@ -463,7 +463,11 @@ class Home extends Component {
                           text={this.state.buttonText}
                           classes="btn-success logoutBtn homeBtn"
                           onClick={this.nextSubmitButton}
-                          disabled={this.state.POnum && this.state.design && this.state.issue && this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color &&  this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0 ? "" : "disabled"}
+                          disabled={
+                            this.state.POnum && this.state.design && this.state.issue && this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color && this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0
+                              ?
+                              "" : "disabled"
+                          }
                         />
                       </div>
                       :
@@ -511,6 +515,19 @@ class Home extends Component {
                           text={this.state.buttonText}
                           classes="btn-success logoutBtn homeBtn"
                           onClick={this.nextSubmitButton}
+                          disabled={
+                            (this.state.POnum && this.state.design && this.state.issue)
+                              &&
+                              (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
+                              &&
+                              (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
+                              &&
+                              (this.state.receivedInfo.brand && this.state.receivedInfo.style && this.state.receivedInfo.color)
+                              &&
+                              (this.state.receivedInfo.xSmall > 0 || this.state.receivedInfo.small > 0 || this.state.receivedInfo.medium > 0 || this.state.receivedInfo.large > 0 || this.state.receivedInfo.xLarge > 0 || this.state.receivedInfo.twoXL > 0 || this.state.receivedInfo.threeXL > 0 || this.state.receivedInfo.fourXL > 0 || this.state.receivedInfo.fiveXL > 0)
+                              ?
+                              "" : "disabled"
+                          }
                         />
                       </div>
                     :
