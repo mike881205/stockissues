@@ -463,6 +463,7 @@ class Home extends Component {
                           text={this.state.buttonText}
                           classes="btn-success logoutBtn homeBtn"
                           onClick={this.nextSubmitButton}
+                          disabled={this.state.POnum && this.state.design && this.state.issue && this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color &&  this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0 ? "" : "disabled"}
                         />
                       </div>
                       :
