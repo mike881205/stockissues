@@ -54,44 +54,39 @@ class Home extends Component {
 
     let issue = this.state.issue
 
-    let missBrand = this.state.missingInfo.brand
-    let missStyle = this.state.missingInfo.style
-    let missColor = this.state.missingInfo.color
-    let missXsmall = this.state.missingInfo.xSmall
-    let missSmall = this.state.missingInfo.small
-    let missMedium = this.state.missingInfo.medium
-    let missLarge = this.state.missingInfo.large
-    let missXlarge = this.state.missingInfo.xLarge
-    let missTwoXL = this.state.missingInfo.twoXL
-    let missThreeXL = this.state.missingInfo.threeXL
-    let missFourXL = this.state.missingInfo.fourXL
-    let missFiveXL = this.state.missingInfo.fiveXL
-
-    let recBrand = this.state.receivedInfo.brand
-    let recStyle = this.state.receivedInfo.style
-    let recColor = this.state.receivedInfo.color
-    let recXsmall = this.state.receivedInfo.xSmall
-    let recSmall = this.state.receivedInfo.small
-    let recMedium = this.state.receivedInfo.medium
-    let recLarge = this.state.receivedInfo.large
-    let recXlarge = this.state.receivedInfo.xLarge
-    let recTwoXL = this.state.receivedInfo.twoXL
-    let recThreeXL = this.state.receivedInfo.threeXL
-    let recFourXL = this.state.receivedInfo.fourXL
-    let recFiveXL = this.state.receivedInfo.fiveXL
-
     API.addPOInfo({
       POnum: this.state.POnum,
       design: this.state.design,
       issue: this.state.issue
     })
       .then(res => {
+
         console.log(res.data)
 
-        this.addMissingInfo(res.data.POnum, res.data.design, res.data.id)
-
-        this.addReceivedInfo(res.data.POnum, res.data.design, res.data.id)
-
+        switch (issue) {
+          case "Missing Garments - Wrong or Extra Garments Received":
+            this.addMissingInfo(res.data.POnum, res.data.design, res.data.id)
+            this.addReceivedInfo(res.data.POnum, res.data.design, res.data.id)
+            alert("Issue Submitted")
+            window.location.reload();
+            break;
+          case "Received Damaged/Stained/Defective Garments":
+            this.addMissingInfo(res.data.POnum, res.data.design, res.data.id)
+            this.addReceivedInfo(res.data.POnum, res.data.design, res.data.id)
+            alert("Issue Submitted")
+            window.location.reload();
+            break;
+          case "Missing Garments - Packing Slip is Correct, No Extras":
+            this.addMissingInfo(res.data.POnum, res.data.design, res.data.id)
+            alert("Issue Submitted")
+            window.location.reload();
+            break;
+          case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
+            this.addReceivedInfo(res.data.POnum, res.data.design, res.data.id)
+            alert("Issue Submitted")
+            window.location.reload();
+            break;
+        }
       })
   }
 
@@ -306,9 +301,26 @@ class Home extends Component {
 
   dropDownChange = event => {
 
+    let garmentInfoObj = {
+      brand: "",
+      style: "",
+      color: "",
+      xSmall: 0,
+      small: 0,
+      medium: 0,
+      large: 0,
+      xLarge: 0,
+      twoXL: 0,
+      threeXL: 0,
+      fourXL: 0,
+      fiveXL: 0
+    }
+
     switch (event) {
       case "Missing Garments - Wrong or Extra Garments Received":
         this.setState({
+          missingInfo: garmentInfoObj,
+          receivedInfo: garmentInfoObj,
           issue: event,
           showReceivedInput: false,
           buttonText: "Next"
@@ -316,24 +328,29 @@ class Home extends Component {
         break;
       case "Received Damaged/Stained/Defective Garments":
         this.setState({
+          missingInfo: garmentInfoObj,
+          receivedInfo: garmentInfoObj,
           issue: event,
           showReceivedInput: false,
-          buttonText: "Next"
+          buttonText: "Next",
         });
         break;
       case "Missing Garments - Packing Slip is Correct, No Extras":
         this.setState({
+          missingInfo: garmentInfoObj,
+          receivedInfo: garmentInfoObj,
           issue: event,
           showReceivedInput: false,
-          buttonText: "Submit"
+          buttonText: "Submit",
         });
         break;
       case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
-        console.log("extras")
         this.setState({
+          missingInfo: garmentInfoObj,
+          receivedInfo: garmentInfoObj,
           issue: event,
           showReceivedInput: true,
-          buttonText: "Submit"
+          buttonText: "Submit",
         });
         break;
     }
@@ -343,61 +360,16 @@ class Home extends Component {
 
     let buttonText = this.state.buttonText
 
-    let POnum = this.state.POnum
-    let design = this.state.design
-    let issue = this.state.issue
-
-    let missBrand = this.state.missingInfo.brand
-    let missStyle = this.state.missingInfo.style
-    let missColor = this.state.missingInfo.color
-    // let missXsmall = this.state.missingInfo.xSmall
-    // let missSmall = this.state.missingInfo.small
-    // let missMedium = this.state.missingInfo.medium
-    // let missLarge = this.state.missingInfo.large
-    // let missXlarge = this.state.missingInfo.xLarge
-    // let missTwoXL = this.state.missingInfo.twoXL
-    // let missThreeXL = this.state.missingInfo.threeXL
-    // let missFourXL = this.state.missingInfo.fourXL
-    // let missFiveXL = this.state.missingInfo.fiveXL
-
-    let recBrand = this.state.receivedInfo.brand
-    let recStyle = this.state.receivedInfo.style
-    let recColor = this.state.receivedInfo.color
-    // let recXsmall = this.state.receivedInfo.xSmall
-    // let recSmall = this.state.receivedInfo.small
-    // let recMedium = this.state.receivedInfo.medium
-    // let recLarge = this.state.receivedInfo.large
-    // let recXlarge = this.state.receivedInfo.xLarge
-    // let recTwoXL = this.state.receivedInfo.twoXL
-    // let recThreeXL = this.state.receivedInfo.threeXL
-    // let recFourXL = this.state.receivedInfo.fourXL
-    // let recFiveXL = this.state.receivedInfo.fiveXL
-
     if (buttonText === "Next") {
 
       this.setState({
         showReceivedInput: true,
         buttonText: "Submit"
       })
-
-      // if (missBrand && missStyle && missColor) {
-      //   this.setState({
-      //     showReceivedInput: true,
-      //     buttonText: "Submit"
-      //   })
-      // }
-      // else {
-      //   alert("Please enter missing garment info")
-      // }
     }
     else {
-      if (POnum && design && issue) {
-        event.preventDefault()
-        this.addPOInfo()
-      }
-      else {
-        alert("PO Number & Design Name are Required")
-      }
+      event.preventDefault()
+      this.addPOInfo()
     }
   }
 
@@ -464,7 +436,11 @@ class Home extends Component {
                           classes="btn-success logoutBtn homeBtn"
                           onClick={this.nextSubmitButton}
                           disabled={
-                            this.state.POnum && this.state.design && this.state.issue && this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color && this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0
+                            (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                              &&
+                              (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
+                              &&
+                              (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
                               ?
                               "" : "disabled"
                           }
@@ -511,12 +487,13 @@ class Home extends Component {
                           hats={this.state.receivedInfo.hats}
                           id={"received"}
                         />
+                        <h5>Make sure that all of the info is correct before submitting</h5>
                         <FormBtn
                           text={this.state.buttonText}
                           classes="btn-success logoutBtn homeBtn"
                           onClick={this.nextSubmitButton}
                           disabled={
-                            (this.state.POnum && this.state.design && this.state.issue)
+                            (this.state.POnum.length === 5 && this.state.design && this.state.issue)
                               &&
                               (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
                               &&
@@ -551,10 +528,20 @@ class Home extends Component {
                         // hats={this.state.missingInfo.hats}
                         id={"missing"}
                       />
+                      <h5>Make sure that all of the info is correct before submitting</h5>
                       <FormBtn
                         text={this.state.buttonText}
                         classes="btn-success logoutBtn homeBtn"
                         onClick={this.nextSubmitButton}
+                        disabled={
+                          (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                            &&
+                            (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
+                            &&
+                            (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
+                            ?
+                            "" : "disabled"
+                        }
                       />
                       <hr></hr>
                     </div>
@@ -579,10 +566,20 @@ class Home extends Component {
                       hats={this.state.receivedInfo.hats}
                       id={"received"}
                     />
+                    <h5>Make sure that all of the info is correct before submitting</h5>
                     <FormBtn
                       text={this.state.buttonText}
                       classes="btn-success logoutBtn homeBtn"
                       onClick={this.nextSubmitButton}
+                      disabled={
+                        (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                          &&
+                          (this.state.receivedInfo.brand && this.state.receivedInfo.style && this.state.receivedInfo.color)
+                          &&
+                          (this.state.receivedInfo.xSmall > 0 || this.state.receivedInfo.small > 0 || this.state.receivedInfo.medium > 0 || this.state.receivedInfo.large > 0 || this.state.receivedInfo.xLarge > 0 || this.state.receivedInfo.twoXL > 0 || this.state.receivedInfo.threeXL > 0 || this.state.receivedInfo.fourXL > 0 || this.state.receivedInfo.fiveXL > 0)
+                          ?
+                          "" : "disabled"
+                      }
                     />
                   </div>
                 :
