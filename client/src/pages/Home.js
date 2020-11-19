@@ -47,7 +47,8 @@ class Home extends Component {
       hats: 0
     },
     showReceivedInput: false,
-    buttonText: ""
+    buttonText: "",
+    notes: ""
   }
 
   addPOInfo = () => {
@@ -57,7 +58,8 @@ class Home extends Component {
     API.addPOInfo({
       POnum: this.state.POnum,
       design: this.state.design,
-      issue: this.state.issue
+      issue: this.state.issue,
+      notes: this.state.notes
     })
       .then(res => {
 
@@ -182,6 +184,9 @@ class Home extends Component {
         break;
       case "design":
         this.setState({ design: value });
+        break;
+      case "notes":
+        this.setState({ notes: value });
         break;
     }
 
@@ -321,6 +326,7 @@ class Home extends Component {
         this.setState({
           missingInfo: garmentInfoObj,
           receivedInfo: garmentInfoObj,
+          notes: "",
           issue: event,
           showReceivedInput: false,
           buttonText: "Next"
@@ -330,6 +336,7 @@ class Home extends Component {
         this.setState({
           missingInfo: garmentInfoObj,
           receivedInfo: garmentInfoObj,
+          notes: "",
           issue: event,
           showReceivedInput: false,
           buttonText: "Next",
@@ -339,6 +346,7 @@ class Home extends Component {
         this.setState({
           missingInfo: garmentInfoObj,
           receivedInfo: garmentInfoObj,
+          notes: "",
           issue: event,
           showReceivedInput: false,
           buttonText: "Submit",
@@ -348,6 +356,7 @@ class Home extends Component {
         this.setState({
           missingInfo: garmentInfoObj,
           receivedInfo: garmentInfoObj,
+          notes: "",
           issue: event,
           showReceivedInput: true,
           buttonText: "Submit",
@@ -487,6 +496,16 @@ class Home extends Component {
                           hats={this.state.receivedInfo.hats}
                           id={"received"}
                         />
+                        <br></br>
+                        <FormGroup>
+                          <Label text="Notes" />
+                          <Input
+                            name="notes"
+                            value={this.state.notes}
+                            onChange={this.handleInputChange}
+                          />
+                        </FormGroup>
+                        <br></br>
                         <h5>Make sure that all of the info is correct before submitting</h5>
                         <FormBtn
                           text={this.state.buttonText}
@@ -528,6 +547,16 @@ class Home extends Component {
                         // hats={this.state.missingInfo.hats}
                         id={"missing"}
                       />
+                      <br></br>
+                      <FormGroup>
+                        <Label text="Notes" />
+                        <Input
+                          name="notes"
+                          value={this.state.notes}
+                          onChange={this.handleInputChange}
+                        />
+                      </FormGroup>
+                      <br></br>
                       <h5>Make sure that all of the info is correct before submitting</h5>
                       <FormBtn
                         text={this.state.buttonText}
@@ -566,6 +595,16 @@ class Home extends Component {
                       hats={this.state.receivedInfo.hats}
                       id={"received"}
                     />
+                    <br></br>
+                    <FormGroup>
+                      <Label text="Notes" />
+                      <Input
+                        name="notes"
+                        value={this.state.notes}
+                        onChange={this.handleInputChange}
+                      />
+                    </FormGroup>
+                    <br></br>
                     <h5>Make sure that all of the info is correct before submitting</h5>
                     <FormBtn
                       text={this.state.buttonText}

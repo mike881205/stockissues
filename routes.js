@@ -55,7 +55,8 @@ router.post("/api/addPOInfo", function (req, res) {
   db.POInfo.create({
     POnum: req.body.POnum,
     design: req.body.design,
-    issue: req.body.issue
+    issue: req.body.issue,
+    notes: req.body.notes
   }).then(POInfo => res.json(POInfo))
     .catch(function (err) {
       console.log(err);

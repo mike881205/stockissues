@@ -12,6 +12,10 @@ module.exports = function (sequelize, DataTypes) {
         issue: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        notes: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     });
 

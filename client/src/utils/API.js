@@ -16,8 +16,8 @@ export default {
   availableUN: function (username) {
     return axios.get("/api/user/?username=" + username);
   },
-  addPOInfo: function(POnum, design, issue) {
-    return axios.post("/api/addPOInfo", POnum, design, issue)
+  addPOInfo: function(POnum, design, issue, notes) {
+    return axios.post("/api/addPOInfo", POnum, design, issue, notes)
   },
   addMissingInfo: function(POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId) {
     return axios.post("/api/addMissingInfo", POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId)
