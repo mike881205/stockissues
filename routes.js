@@ -54,14 +54,13 @@ router.get("/api/user", function (req, res) {
 router.post("/api/addPOInfo", function (req, res) {
   db.POInfo.create({
     PONum: req.body.PONum,
-    design: req.body.question,
+    design: req.body.design,
     issue: req.body.issue
-  }).then(function () {
-    res.json("PO Info Added");
-  }).catch(function (err) {
-    console.log(err);
-    res.json(err);
-  });
+  }).then(POInfo => res.json(POInfo))
+    .catch(function (err) {
+      console.log(err);
+      res.json(err);
+    });
 })
 
 router.post("/api/addMissingInfo", function (req, res) {
@@ -78,12 +77,11 @@ router.post("/api/addMissingInfo", function (req, res) {
     threeXL: req.body.threeXL,
     fourXL: req.body.fourXL,
     fiveXL: req.body.fiveXL
-  }).then(function () {
-    res.json("Missing Info Added");
-  }).catch(function (err) {
-    console.log(err);
-    res.json(err);
-  });
+  }).then(MissingInfo => res.json(MissingInfo))
+    .catch(function (err) {
+      console.log(err);
+      res.json(err);
+    });
 })
 
 router.post("/api/addReceivedInfo", function (req, res) {
@@ -100,9 +98,8 @@ router.post("/api/addReceivedInfo", function (req, res) {
     threeXL: req.body.threeXL,
     fourXL: req.body.fourXL,
     fiveXL: req.body.fiveXL
-  }).then(function () {
-    res.json("Received Info Added");
-  }).catch(function (err) {
+  }).then(ReceivedInfo => res.json(ReceivedInfo))
+  .catch(function (err) {
     console.log(err);
     res.json(err);
   });

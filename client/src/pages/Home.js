@@ -51,25 +51,55 @@ class Home extends Component {
   }
 
   addPOInfo = () => {
-
     API.addPOInfo({
       PONum: this.state.PONum,
       design: this.state.design,
       issue: this.state.issue
     })
       .then(res => {
-        console.log(res)
         console.log(res.data)
       })
   }
 
-  // addMissingInfo = (brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) => {
+  addMissingInfo = () => {
+    API.addMissingInfo({
+      brand: this.state.missingInfo.brand,
+      style: this.state.missingInfo.style,
+      color: this.state.missingInfo.color,
+      xSmall: this.state.missingInfo.xSmall,
+      small: this.state.missingInfo.small,
+      medium: this.state.missingInfo.medium,
+      large: this.state.missingInfo.large,
+      xLarge: this.state.missingInfo.xLarge,
+      twoXL: this.state.missingInfo.twoXL,
+      threeXL: this.state.missingInfo.threeXL,
+      fourXL: this.state.missingInfo.fourXL,
+      fiveXL: this.state.missingInfo.fiveXL
+    })
+      .then(res => {
+        console.log(res.data)
+      })
+  }
 
-  // }
-
-  // addReceivedInfo = (brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL) => {
-
-  // }
+  addReceivedInfo = () => {
+    API.addReceivedInfo({
+      brand: this.state.receivedInfo.brand,
+      style: this.state.receivedInfo.style,
+      color: this.state.receivedInfo.color,
+      xSmall: this.state.receivedInfo.xSmall,
+      small: this.state.receivedInfo.small,
+      medium: this.state.receivedInfo.medium,
+      large: this.state.receivedInfo.large,
+      xLarge: this.state.receivedInfo.xLarge,
+      twoXL: this.state.receivedInfo.twoXL,
+      threeXL: this.state.receivedInfo.threeXL,
+      fourXL: this.state.receivedInfo.fourXL,
+      fiveXL: this.state.receivedInfo.fiveXL
+    })
+      .then(res => {
+        console.log(res.data)
+      })
+  }
 
   handleInputChange = event => {
 
@@ -118,7 +148,7 @@ class Home extends Component {
         this.setState({ PONum: POVal.trim() });
         break;
       case "design":
-        this.setState({ design: value.trim() });
+        this.setState({ design: value });
         break;
     }
 
@@ -284,8 +314,14 @@ class Home extends Component {
       })
     }
     else {
-      event.preventDefault()
-      this.addPOInfo()
+      if (this.state.PONum && this.state.design && this.state.issue) {
+        event.preventDefault()
+        this.addPOInfo()
+      }
+      else {
+        alert("PO Number & Design Name are Required")
+      }
+
       // switch (issue) {
       //   case "Missing Garments - Wrong or Extra Garments Received":
       //   // this.addMissingInfo()
@@ -421,21 +457,21 @@ class Home extends Component {
                       <h3>What is missing?</h3>
                       <hr></hr>
                       <GarmentInfo
-                          handleInputChange={this.handleInputChange}
-                          brand={this.state.missingInfo.brand}
-                          style={this.state.missingInfo.style}
-                          color={this.state.missingInfo.color}
-                          xSmall={this.state.missingInfo.xSmall}
-                          small={this.state.missingInfo.small}
-                          medium={this.state.missingInfo.medium}
-                          large={this.state.missingInfo.large}
-                          xLarge={this.state.missingInfo.xLarge}
-                          twoXL={this.state.missingInfo.twoXL}
-                          threeXL={this.state.missingInfo.threeXL}
-                          fourXL={this.state.missingInfo.fourXL}
-                          fiveXL={this.state.missingInfo.fiveXL}
-                          // hats={this.state.missingInfo.hats}
-                          id={"missing"}
+                        handleInputChange={this.handleInputChange}
+                        brand={this.state.missingInfo.brand}
+                        style={this.state.missingInfo.style}
+                        color={this.state.missingInfo.color}
+                        xSmall={this.state.missingInfo.xSmall}
+                        small={this.state.missingInfo.small}
+                        medium={this.state.missingInfo.medium}
+                        large={this.state.missingInfo.large}
+                        xLarge={this.state.missingInfo.xLarge}
+                        twoXL={this.state.missingInfo.twoXL}
+                        threeXL={this.state.missingInfo.threeXL}
+                        fourXL={this.state.missingInfo.fourXL}
+                        fiveXL={this.state.missingInfo.fiveXL}
+                        // hats={this.state.missingInfo.hats}
+                        id={"missing"}
                       />
                       <FormBtn
                         text={this.state.buttonText}
