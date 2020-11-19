@@ -1,5 +1,13 @@
 module.exports = function (sequelize, DataTypes) {
     let Received = sequelize.define("Received", {
+        POnum: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        design: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         brand: {
             type: DataTypes.STRING,
             allowNull: false

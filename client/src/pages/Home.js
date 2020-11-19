@@ -12,7 +12,7 @@ const issues = ["Missing Garments - Wrong or Extra Garments Received", "Received
 class Home extends Component {
 
   state = {
-    PONum: "",
+    POnum: "",
     design: "",
     issue: "",
     reason: "",
@@ -51,18 +51,54 @@ class Home extends Component {
   }
 
   addPOInfo = () => {
+
+    let issue = this.state.issue
+
+    let missBrand = this.state.missingInfo.brand
+    let missStyle = this.state.missingInfo.style
+    let missColor = this.state.missingInfo.color
+    let missXsmall = this.state.missingInfo.xSmall
+    let missSmall = this.state.missingInfo.small
+    let missMedium = this.state.missingInfo.medium
+    let missLarge = this.state.missingInfo.large
+    let missXlarge = this.state.missingInfo.xLarge
+    let missTwoXL = this.state.missingInfo.twoXL
+    let missThreeXL = this.state.missingInfo.threeXL
+    let missFourXL = this.state.missingInfo.fourXL
+    let missFiveXL = this.state.missingInfo.fiveXL
+
+    let recBrand = this.state.receivedInfo.brand
+    let recStyle = this.state.receivedInfo.style
+    let recColor = this.state.receivedInfo.color
+    let recXsmall = this.state.receivedInfo.xSmall
+    let recSmall = this.state.receivedInfo.small
+    let recMedium = this.state.receivedInfo.medium
+    let recLarge = this.state.receivedInfo.large
+    let recXlarge = this.state.receivedInfo.xLarge
+    let recTwoXL = this.state.receivedInfo.twoXL
+    let recThreeXL = this.state.receivedInfo.threeXL
+    let recFourXL = this.state.receivedInfo.fourXL
+    let recFiveXL = this.state.receivedInfo.fiveXL
+
     API.addPOInfo({
-      PONum: this.state.PONum,
+      POnum: this.state.POnum,
       design: this.state.design,
       issue: this.state.issue
     })
       .then(res => {
         console.log(res.data)
+
+        this.addMissingInfo(res.data.POnum, res.data.design, res.data.id)
+
+        this.addReceivedInfo(res.data.POnum, res.data.design, res.data.id)
+
       })
   }
 
-  addMissingInfo = () => {
+  addMissingInfo = (PONUM, POdesign, POInfoId) => {
     API.addMissingInfo({
+      POnum: PONUM,
+      design: POdesign,
       brand: this.state.missingInfo.brand,
       style: this.state.missingInfo.style,
       color: this.state.missingInfo.color,
@@ -74,15 +110,18 @@ class Home extends Component {
       twoXL: this.state.missingInfo.twoXL,
       threeXL: this.state.missingInfo.threeXL,
       fourXL: this.state.missingInfo.fourXL,
-      fiveXL: this.state.missingInfo.fiveXL
+      fiveXL: this.state.missingInfo.fiveXL,
+      POInfoId: POInfoId
     })
       .then(res => {
         console.log(res.data)
       })
   }
 
-  addReceivedInfo = () => {
+  addReceivedInfo = (PONUM, POdesign, POInfoId) => {
     API.addReceivedInfo({
+      POnum: PONUM,
+      design: POdesign,
       brand: this.state.receivedInfo.brand,
       style: this.state.receivedInfo.style,
       color: this.state.receivedInfo.color,
@@ -94,7 +133,8 @@ class Home extends Component {
       twoXL: this.state.receivedInfo.twoXL,
       threeXL: this.state.receivedInfo.threeXL,
       fourXL: this.state.receivedInfo.fourXL,
-      fiveXL: this.state.receivedInfo.fiveXL
+      fiveXL: this.state.receivedInfo.fiveXL,
+      POInfoId: POInfoId
     })
       .then(res => {
         console.log(res.data)
@@ -102,8 +142,6 @@ class Home extends Component {
   }
 
   handleInputChange = event => {
-
-    console.log(event.target)
 
     const { name, value, id } = event.target;
 
@@ -140,12 +178,12 @@ class Home extends Component {
     }
 
     let numVal = parseInt(value)
-    let POVal = value.replace(/[^0-9]+/g, "")
+    let POval = value.replace(/[^0-9]+/g, "")
     let colorVal = value.replace(/[^a-zA-Z ]/g, "")
 
     switch (name) {
-      case "PONum":
-        this.setState({ PONum: POVal.trim() });
+      case "POnum":
+        this.setState({ POnum: POval.trim() });
         break;
       case "design":
         this.setState({ design: value });
@@ -267,7 +305,6 @@ class Home extends Component {
   };
 
   dropDownChange = event => {
-    // console.log(event)
 
     switch (event) {
       case "Missing Garments - Wrong or Extra Garments Received":
@@ -305,39 +342,62 @@ class Home extends Component {
   nextSubmitButton = event => {
 
     let buttonText = this.state.buttonText
+
+    let POnum = this.state.POnum
+    let design = this.state.design
     let issue = this.state.issue
 
+    let missBrand = this.state.missingInfo.brand
+    let missStyle = this.state.missingInfo.style
+    let missColor = this.state.missingInfo.color
+    // let missXsmall = this.state.missingInfo.xSmall
+    // let missSmall = this.state.missingInfo.small
+    // let missMedium = this.state.missingInfo.medium
+    // let missLarge = this.state.missingInfo.large
+    // let missXlarge = this.state.missingInfo.xLarge
+    // let missTwoXL = this.state.missingInfo.twoXL
+    // let missThreeXL = this.state.missingInfo.threeXL
+    // let missFourXL = this.state.missingInfo.fourXL
+    // let missFiveXL = this.state.missingInfo.fiveXL
+
+    let recBrand = this.state.receivedInfo.brand
+    let recStyle = this.state.receivedInfo.style
+    let recColor = this.state.receivedInfo.color
+    // let recXsmall = this.state.receivedInfo.xSmall
+    // let recSmall = this.state.receivedInfo.small
+    // let recMedium = this.state.receivedInfo.medium
+    // let recLarge = this.state.receivedInfo.large
+    // let recXlarge = this.state.receivedInfo.xLarge
+    // let recTwoXL = this.state.receivedInfo.twoXL
+    // let recThreeXL = this.state.receivedInfo.threeXL
+    // let recFourXL = this.state.receivedInfo.fourXL
+    // let recFiveXL = this.state.receivedInfo.fiveXL
+
     if (buttonText === "Next") {
+
       this.setState({
         showReceivedInput: true,
         buttonText: "Submit"
       })
+
+      // if (missBrand && missStyle && missColor) {
+      //   this.setState({
+      //     showReceivedInput: true,
+      //     buttonText: "Submit"
+      //   })
+      // }
+      // else {
+      //   alert("Please enter missing garment info")
+      // }
     }
     else {
-      if (this.state.PONum && this.state.design && this.state.issue) {
+      if (POnum && design && issue) {
         event.preventDefault()
         this.addPOInfo()
       }
       else {
         alert("PO Number & Design Name are Required")
       }
-
-      // switch (issue) {
-      //   case "Missing Garments - Wrong or Extra Garments Received":
-      //   // this.addMissingInfo()
-      //   // this.addReceivedInfo()
-      //   break;
-      //   case "Received Damaged/Stained/Defective Garments":
-      //   // this.addMissingInfo()
-      //   // this.addReceivedInfo()
-      //   break;
-      //   case "Missing Garments - Packing Slip is Correct, No Extras":
-      //   // this.addMissingInfo()
-      //   break;
-      //   case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
-      //   // this.addReceivedInfo()
-      //   break;
-      // }
     }
   }
 
@@ -351,8 +411,8 @@ class Home extends Component {
             <FormGroup>
               <Label text="PO Number" />
               <Input
-                name="PONum"
-                value={this.state.PONum}
+                name="POnum"
+                value={this.state.POnum}
                 onChange={this.handleInputChange}
                 maxLength={5}
               />

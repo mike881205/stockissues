@@ -53,7 +53,7 @@ router.get("/api/user", function (req, res) {
 
 router.post("/api/addPOInfo", function (req, res) {
   db.POInfo.create({
-    PONum: req.body.PONum,
+    POnum: req.body.POnum,
     design: req.body.design,
     issue: req.body.issue
   }).then(POInfo => res.json(POInfo))
@@ -65,6 +65,8 @@ router.post("/api/addPOInfo", function (req, res) {
 
 router.post("/api/addMissingInfo", function (req, res) {
   db.Missing.create({
+    POnum: req.body.POnum,
+    design: req.body.design,
     brand: req.body.brand,
     style: req.body.style,
     color: req.body.color,
@@ -72,11 +74,12 @@ router.post("/api/addMissingInfo", function (req, res) {
     small: req.body.small,
     medium: req.body.medium,
     large: req.body.large,
-    xlarge: req.body.xlarge,
+    xLarge: req.body.xLarge,
     twoXL: req.body.twoXL,
     threeXL: req.body.threeXL,
     fourXL: req.body.fourXL,
-    fiveXL: req.body.fiveXL
+    fiveXL: req.body.fiveXL,
+    POInfoId: req.body.POInfoId
   }).then(MissingInfo => res.json(MissingInfo))
     .catch(function (err) {
       console.log(err);
@@ -86,6 +89,8 @@ router.post("/api/addMissingInfo", function (req, res) {
 
 router.post("/api/addReceivedInfo", function (req, res) {
   db.Received.create({
+    POnum: req.body.POnum,
+    design: req.body.design,
     brand: req.body.brand,
     style: req.body.style,
     color: req.body.color,
@@ -93,11 +98,12 @@ router.post("/api/addReceivedInfo", function (req, res) {
     small: req.body.small,
     medium: req.body.medium,
     large: req.body.large,
-    xlarge: req.body.xlarge,
+    xLarge: req.body.xLarge,
     twoXL: req.body.twoXL,
     threeXL: req.body.threeXL,
     fourXL: req.body.fourXL,
-    fiveXL: req.body.fiveXL
+    fiveXL: req.body.fiveXL,
+    POInfoId: req.body.POInfoId
   }).then(ReceivedInfo => res.json(ReceivedInfo))
   .catch(function (err) {
     console.log(err);

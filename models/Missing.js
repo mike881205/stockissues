@@ -1,5 +1,13 @@
 module.exports = function (sequelize, DataTypes) {
     let Missing = sequelize.define("Missing", {
+        POnum: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        design: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         brand: {
             type: DataTypes.STRING,
             allowNull: false

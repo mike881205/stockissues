@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     let POInfo = sequelize.define("POInfo", {
-        PONum: {
+        POnum: {
             type: DataTypes.STRING,
             allowNull: false,
             len: [5]
