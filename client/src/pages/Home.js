@@ -153,8 +153,8 @@ class Home extends Component {
       .then(res => {
         console.log(res.data)
 
-        // alert("Issue Submitted")
-        // window.location.reload();
+        alert("Issue Submitted")
+        window.location.reload();
       })
   }
 
