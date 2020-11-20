@@ -47,10 +47,14 @@ class Home extends Component {
       fiveXL: 0,
       hats: 0
     },
+    showPOinput: true,
+    showMissingInput: false,
     showReceivedInput: false,
-    buttonText: "",
+    showSummary: false,
+    buttonText: "Next",
     notes: "",
-    priority: ""
+    priority: "",
+    viewSubmitted: false
   }
 
   addPOInfo = () => {
@@ -342,7 +346,7 @@ class Home extends Component {
           notes: "",
           issue: event,
           showReceivedInput: false,
-          buttonText: "Next",
+          buttonText: "Next"
         });
         break;
       case "Missing Garments - Packing Slip is Correct, No Extras":
@@ -352,7 +356,7 @@ class Home extends Component {
           notes: "",
           issue: event,
           showReceivedInput: false,
-          buttonText: "Submit",
+          buttonText: "Submit"
         });
         break;
       case "Extra Garments Received - Packing Slip is Correct, No Missing Garments":
@@ -362,7 +366,7 @@ class Home extends Component {
           notes: "",
           issue: event,
           showReceivedInput: true,
-          buttonText: "Submit",
+          buttonText: "Submit"
         });
         break;
       case "Yes":
@@ -391,6 +395,20 @@ class Home extends Component {
     }
   }
 
+  viewSubmittedIssues = () => {
+
+    let viewSubmitted = this.state.viewSubmitted
+
+    switch (viewSubmitted) {
+      case true:
+        this.setState({ viewSubmitted: false })
+        break;
+      case false:
+        this.setState({ viewSubmitted: true })
+        break;
+    }
+  }
+
   componentDidMount() {
     API.getPOinfo()
       .then(res => {
@@ -404,272 +422,286 @@ class Home extends Component {
   render() {
     return (
       <div className="container" align="center">
-        <div className="jumbotron homeJumbo">
-          <h1>Stock Issues</h1>
-          <hr></hr>
-          <form>
-            <FormGroup>
-              <Label text="PO Number" />
-              <Input
-                name="POnum"
-                value={this.state.POnum}
-                onChange={this.handleInputChange}
-                maxLength={5}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label text="Design name" />
-              <Input
-                name="design"
-                value={this.state.design}
-                onChange={this.handleInputChange}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label text="Issue" />
-              <DropdownList
-                name="issue"
-                onChange={this.dropDownChange}
-                data={issues}
-              />
-            </FormGroup>
 
-            {
-              this.state.issue ?
-                this.state.issue !== "Extra Garments Received - Packing Slip is Correct, No Missing Garments" ?
-                  this.state.issue !== "Missing Garments - Packing Slip is Correct, No Extras" ?
-                    !this.state.showReceivedInput ?
-                      <div>
-                        <h3>What is missing?</h3>
-                        <hr></hr>
-                        <GarmentInfo
-                          handleInputChange={this.handleInputChange}
-                          brand={this.state.missingInfo.brand}
-                          style={this.state.missingInfo.style}
-                          color={this.state.missingInfo.color}
-                          xSmall={this.state.missingInfo.xSmall}
-                          small={this.state.missingInfo.small}
-                          medium={this.state.missingInfo.medium}
-                          large={this.state.missingInfo.large}
-                          xLarge={this.state.missingInfo.xLarge}
-                          twoXL={this.state.missingInfo.twoXL}
-                          threeXL={this.state.missingInfo.threeXL}
-                          fourXL={this.state.missingInfo.fourXL}
-                          fiveXL={this.state.missingInfo.fiveXL}
-                          // hats={this.state.missingInfo.hats}
-                          id={"missing"}
-                        />
-                        <FormGroup>
-                          <Label text="Priority?" />
-                          <DropdownList
-                            name="priority"
-                            onChange={this.dropDownChange}
-                            data={priority}
-                          />
-                        </FormGroup>
-                        <FormBtn
-                          text={this.state.buttonText}
-                          classes="btn-success logoutBtn homeBtn"
-                          onClick={this.nextSubmitButton}
-                          disabled={
-                            (this.state.POnum.length === 5 && this.state.design && this.state.issue)
-                              &&
-                              (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
-                              &&
-                              (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
-                              ?
-                              "" : "disabled"
-                          }
-                        />
-                      </div>
-                      :
-                      <div>
-                        <h3>What is missing?</h3>
-                        <hr></hr>
-                        <GarmentInfo
-                          handleInputChange={this.handleInputChange}
-                          brand={this.state.missingInfo.brand}
-                          style={this.state.missingInfo.style}
-                          color={this.state.missingInfo.color}
-                          xSmall={this.state.missingInfo.xSmall}
-                          small={this.state.missingInfo.small}
-                          medium={this.state.missingInfo.medium}
-                          large={this.state.missingInfo.large}
-                          xLarge={this.state.missingInfo.xLarge}
-                          twoXL={this.state.missingInfo.twoXL}
-                          threeXL={this.state.missingInfo.threeXL}
-                          fourXL={this.state.missingInfo.fourXL}
-                          fiveXL={this.state.missingInfo.fiveXL}
-                          // hats={this.state.missingInfo.hats}
-                          id={"missing"}
-                        />
-                        <FormGroup>
-                          <Label text="Priority?" />
-                          <DropdownList
-                            name="priority"
-                            onChange={this.dropDownChange}
-                            data={priority}
-                          />
-                        </FormGroup>
-                        <hr></hr>
-                        <h3>What was received?</h3>
-                        <hr></hr>
-                        <GarmentInfo
-                          handleInputChange={this.handleInputChange}
-                          brand={this.state.receivedInfo.brand}
-                          style={this.state.receivedInfo.style}
-                          color={this.state.receivedInfo.color}
-                          xSmall={this.state.receivedInfo.xSmall}
-                          small={this.state.receivedInfo.small}
-                          medium={this.state.receivedInfo.medium}
-                          large={this.state.receivedInfo.large}
-                          xLarge={this.state.receivedInfo.xLarge}
-                          twoXL={this.state.receivedInfo.twoXL}
-                          threeXL={this.state.receivedInfo.threeXL}
-                          fourXL={this.state.receivedInfo.fourXL}
-                          fiveXL={this.state.receivedInfo.fiveXL}
-                          hats={this.state.receivedInfo.hats}
-                          id={"received"}
-                        />
-                        <br></br>
-                        <FormGroup>
-                          <Label text="Notes" />
-                          <Input
-                            name="notes"
-                            value={this.state.notes}
-                            onChange={this.handleInputChange}
-                          />
-                        </FormGroup>
-                        <br></br>
-                        <h5>Make sure that all of the info is correct before submitting</h5>
-                        <FormBtn
-                          text={this.state.buttonText}
-                          classes="btn-success logoutBtn homeBtn"
-                          onClick={this.nextSubmitButton}
-                          disabled={
-                            (this.state.POnum.length === 5 && this.state.design && this.state.issue)
-                              &&
-                              (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
-                              &&
-                              (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
-                              &&
-                              (this.state.receivedInfo.brand && this.state.receivedInfo.style && this.state.receivedInfo.color)
-                              &&
-                              (this.state.receivedInfo.xSmall > 0 || this.state.receivedInfo.small > 0 || this.state.receivedInfo.medium > 0 || this.state.receivedInfo.large > 0 || this.state.receivedInfo.xLarge > 0 || this.state.receivedInfo.twoXL > 0 || this.state.receivedInfo.threeXL > 0 || this.state.receivedInfo.fourXL > 0 || this.state.receivedInfo.fiveXL > 0)
-                              ?
-                              "" : "disabled"
-                          }
-                        />
-                      </div>
-                    :
-                    <div>
-                      <h3>What is missing?</h3>
-                      <hr></hr>
-                      <GarmentInfo
-                        handleInputChange={this.handleInputChange}
-                        brand={this.state.missingInfo.brand}
-                        style={this.state.missingInfo.style}
-                        color={this.state.missingInfo.color}
-                        xSmall={this.state.missingInfo.xSmall}
-                        small={this.state.missingInfo.small}
-                        medium={this.state.missingInfo.medium}
-                        large={this.state.missingInfo.large}
-                        xLarge={this.state.missingInfo.xLarge}
-                        twoXL={this.state.missingInfo.twoXL}
-                        threeXL={this.state.missingInfo.threeXL}
-                        fourXL={this.state.missingInfo.fourXL}
-                        fiveXL={this.state.missingInfo.fiveXL}
-                        // hats={this.state.missingInfo.hats}
-                        id={"missing"}
-                      />
-                      <FormGroup>
-                        <Label text="Priority?" />
-                        <DropdownList
-                          name="priority"
-                          onChange={this.dropDownChange}
-                          data={priority}
-                        />
-                      </FormGroup>
-                      <br></br>
-                      <FormGroup>
-                        <Label text="Notes" />
-                        <Input
-                          name="notes"
-                          value={this.state.notes}
-                          onChange={this.handleInputChange}
-                        />
-                      </FormGroup>
-                      <br></br>
-                      <h5>Make sure that all of the info is correct before submitting</h5>
-                      <FormBtn
-                        text={this.state.buttonText}
-                        classes="btn-success logoutBtn homeBtn"
-                        onClick={this.nextSubmitButton}
-                        disabled={
-                          (this.state.POnum.length === 5 && this.state.design && this.state.issue)
-                            &&
-                            (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
-                            &&
-                            (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
-                            ?
-                            "" : "disabled"
-                        }
-                      />
-                      <hr></hr>
-                    </div>
-                  :
-                  <div>
-                    <h3>What was received?</h3>
-                    <hr></hr>
-                    <GarmentInfo
-                      handleInputChange={this.handleInputChange}
-                      brand={this.state.receivedInfo.brand}
-                      style={this.state.receivedInfo.style}
-                      color={this.state.receivedInfo.color}
-                      xSmall={this.state.receivedInfo.xSmall}
-                      small={this.state.receivedInfo.small}
-                      medium={this.state.receivedInfo.medium}
-                      large={this.state.receivedInfo.large}
-                      xLarge={this.state.receivedInfo.xLarge}
-                      twoXL={this.state.receivedInfo.twoXL}
-                      threeXL={this.state.receivedInfo.threeXL}
-                      fourXL={this.state.receivedInfo.fourXL}
-                      fiveXL={this.state.receivedInfo.fiveXL}
-                      hats={this.state.receivedInfo.hats}
-                      id={"received"}
+        {
+          this.state.viewSubmitted ?
+            <div>
+              <FormBtn
+                text={"Back"}
+                classes="btn-success logoutBtn homeBtn"
+                onClick={this.viewSubmittedIssues}
+              />
+              <div className="jumbotron homeJumbo">
+                <h1>Submitted Stock Issues</h1>
+                <hr></hr>
+              </div>
+            </div>
+            :
+            <div>
+              {/* <FormBtn
+                text={"View Submitted Issues"}
+                classes="btn-success logoutBtn homeBtn"
+                onClick={this.viewSubmittedIssues}
+              /> */}
+              <div className="jumbotron homeJumbo">
+                <h1>Stock Issues</h1>
+                <hr></hr>
+                <form>
+                  <FormGroup>
+                    <Label text="PO Number" />
+                    <Input
+                      name="POnum"
+                      value={this.state.POnum}
+                      onChange={this.handleInputChange}
+                      maxLength={5}
                     />
-                    <br></br>
-                    <FormGroup>
-                      <Label text="Notes" />
-                      <Input
-                        name="notes"
-                        value={this.state.notes}
-                        onChange={this.handleInputChange}
+                  </FormGroup>
+                  <FormGroup>
+                    <Label text="Design name" />
+                    <Input
+                      name="design"
+                      value={this.state.design}
+                      onChange={this.handleInputChange}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Label text="Issue" />
+                    <DropdownList
+                      name="issue"
+                      onChange={this.dropDownChange}
+                      data={issues}
+                    />
+                  </FormGroup>
+                  <div>
+                    {
+                      this.state.issue === "Missing Garments - Wrong or Extra Garments Received" || this.state.issue === "Received Damaged/Stained/Defective Garments" || this.state.issue === "Missing Garments - Packing Slip is Correct, No Extras" ?
+                      <FormGroup>
+                      <Label text="Priority?" />
+                      <DropdownList
+                        name="priority"
+                        onChange={this.dropDownChange}
+                        data={priority}
                       />
                     </FormGroup>
-                    <br></br>
-                    <h5>Make sure that all of the info is correct before submitting</h5>
-                    <FormBtn
-                      text={this.state.buttonText}
-                      classes="btn-success logoutBtn homeBtn"
-                      onClick={this.nextSubmitButton}
-                      disabled={
-                        (this.state.POnum.length === 5 && this.state.design && this.state.issue)
-                          &&
-                          (this.state.receivedInfo.brand && this.state.receivedInfo.style && this.state.receivedInfo.color)
-                          &&
-                          (this.state.receivedInfo.xSmall > 0 || this.state.receivedInfo.small > 0 || this.state.receivedInfo.medium > 0 || this.state.receivedInfo.large > 0 || this.state.receivedInfo.xLarge > 0 || this.state.receivedInfo.twoXL > 0 || this.state.receivedInfo.threeXL > 0 || this.state.receivedInfo.fourXL > 0 || this.state.receivedInfo.fiveXL > 0)
-                          ?
-                          "" : "disabled"
-                      }
-                    />
+                    :
+                    ""
+                    }
                   </div>
-                :
-                ""
-            }
+                  {
+                    this.state.issue ?
+                      this.state.issue !== "Extra Garments Received - Packing Slip is Correct, No Missing Garments" ?
+                        this.state.issue !== "Missing Garments - Packing Slip is Correct, No Extras" ?
+                          !this.state.showReceivedInput ?
+                            <div>
+                              <h3>What is missing?</h3>
+                              <hr></hr>
+                              <GarmentInfo
+                                handleInputChange={this.handleInputChange}
+                                brand={this.state.missingInfo.brand}
+                                style={this.state.missingInfo.style}
+                                color={this.state.missingInfo.color}
+                                xSmall={this.state.missingInfo.xSmall}
+                                small={this.state.missingInfo.small}
+                                medium={this.state.missingInfo.medium}
+                                large={this.state.missingInfo.large}
+                                xLarge={this.state.missingInfo.xLarge}
+                                twoXL={this.state.missingInfo.twoXL}
+                                threeXL={this.state.missingInfo.threeXL}
+                                fourXL={this.state.missingInfo.fourXL}
+                                fiveXL={this.state.missingInfo.fiveXL}
+                                // hats={this.state.missingInfo.hats}
+                                id={"missing"}
+                              />
+                              <FormBtn
+                                text={this.state.buttonText}
+                                classes="btn-success logoutBtn homeBtn"
+                                onClick={this.nextSubmitButton}
+                                disabled={
+                                  (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                                    &&
+                                    (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
+                                    &&
+                                    (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
+                                    ?
+                                    "" : "disabled"
+                                }
+                              />
+                            </div>
+                            :
+                            <div>
+                              <h3>What is missing?</h3>
+                              <hr></hr>
+                              <GarmentInfo
+                                handleInputChange={this.handleInputChange}
+                                brand={this.state.missingInfo.brand}
+                                style={this.state.missingInfo.style}
+                                color={this.state.missingInfo.color}
+                                xSmall={this.state.missingInfo.xSmall}
+                                small={this.state.missingInfo.small}
+                                medium={this.state.missingInfo.medium}
+                                large={this.state.missingInfo.large}
+                                xLarge={this.state.missingInfo.xLarge}
+                                twoXL={this.state.missingInfo.twoXL}
+                                threeXL={this.state.missingInfo.threeXL}
+                                fourXL={this.state.missingInfo.fourXL}
+                                fiveXL={this.state.missingInfo.fiveXL}
+                                // hats={this.state.missingInfo.hats}
+                                id={"missing"}
+                              />
+                              <hr></hr>
+                              <h3>What was received?</h3>
+                              <hr></hr>
+                              <GarmentInfo
+                                handleInputChange={this.handleInputChange}
+                                brand={this.state.receivedInfo.brand}
+                                style={this.state.receivedInfo.style}
+                                color={this.state.receivedInfo.color}
+                                xSmall={this.state.receivedInfo.xSmall}
+                                small={this.state.receivedInfo.small}
+                                medium={this.state.receivedInfo.medium}
+                                large={this.state.receivedInfo.large}
+                                xLarge={this.state.receivedInfo.xLarge}
+                                twoXL={this.state.receivedInfo.twoXL}
+                                threeXL={this.state.receivedInfo.threeXL}
+                                fourXL={this.state.receivedInfo.fourXL}
+                                fiveXL={this.state.receivedInfo.fiveXL}
+                                // hats={this.state.receivedInfo.hats}
+                                id={"received"}
+                              />
+                              <br></br>
+                              <FormGroup>
+                                <Label text="Notes" />
+                                <Input
+                                  name="notes"
+                                  value={this.state.notes}
+                                  onChange={this.handleInputChange}
+                                />
+                              </FormGroup>
+                              <br></br>
+                              <h5>Make sure that all of the info is correct before submitting</h5>
+                              <FormBtn
+                                text={this.state.buttonText}
+                                classes="btn-success logoutBtn homeBtn"
+                                onClick={this.nextSubmitButton}
+                                disabled={
+                                  (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                                    &&
+                                    (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
+                                    &&
+                                    (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
+                                    &&
+                                    (this.state.receivedInfo.brand && this.state.receivedInfo.style && this.state.receivedInfo.color)
+                                    &&
+                                    (this.state.receivedInfo.xSmall > 0 || this.state.receivedInfo.small > 0 || this.state.receivedInfo.medium > 0 || this.state.receivedInfo.large > 0 || this.state.receivedInfo.xLarge > 0 || this.state.receivedInfo.twoXL > 0 || this.state.receivedInfo.threeXL > 0 || this.state.receivedInfo.fourXL > 0 || this.state.receivedInfo.fiveXL > 0)
+                                    ?
+                                    "" : "disabled"
+                                }
+                              />
+                            </div>
+                          :
+                          <div>
+                            <h3>What is missing?</h3>
+                            <hr></hr>
+                            <GarmentInfo
+                              handleInputChange={this.handleInputChange}
+                              brand={this.state.missingInfo.brand}
+                              style={this.state.missingInfo.style}
+                              color={this.state.missingInfo.color}
+                              xSmall={this.state.missingInfo.xSmall}
+                              small={this.state.missingInfo.small}
+                              medium={this.state.missingInfo.medium}
+                              large={this.state.missingInfo.large}
+                              xLarge={this.state.missingInfo.xLarge}
+                              twoXL={this.state.missingInfo.twoXL}
+                              threeXL={this.state.missingInfo.threeXL}
+                              fourXL={this.state.missingInfo.fourXL}
+                              fiveXL={this.state.missingInfo.fiveXL}
+                              // hats={this.state.missingInfo.hats}
+                              id={"missing"}
+                            />
+                            <br></br>
+                            <FormGroup>
+                              <Label text="Notes" />
+                              <Input
+                                name="notes"
+                                value={this.state.notes}
+                                onChange={this.handleInputChange}
+                              />
+                            </FormGroup>
+                            <br></br>
+                            <h5>Make sure that all of the info is correct before submitting</h5>
+                            <FormBtn
+                              text={this.state.buttonText}
+                              classes="btn-success logoutBtn homeBtn"
+                              onClick={this.nextSubmitButton}
+                              disabled={
+                                (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                                  &&
+                                  (this.state.missingInfo.brand && this.state.missingInfo.style && this.state.missingInfo.color)
+                                  &&
+                                  (this.state.missingInfo.xSmall > 0 || this.state.missingInfo.small > 0 || this.state.missingInfo.medium > 0 || this.state.missingInfo.large > 0 || this.state.missingInfo.xLarge > 0 || this.state.missingInfo.twoXL > 0 || this.state.missingInfo.threeXL > 0 || this.state.missingInfo.fourXL > 0 || this.state.missingInfo.fiveXL > 0)
+                                  ?
+                                  "" : "disabled"
+                              }
+                            />
+                            <hr></hr>
+                          </div>
+                        :
+                        <div>
+                          <h3>What was received?</h3>
+                          <hr></hr>
+                          <GarmentInfo
+                            handleInputChange={this.handleInputChange}
+                            brand={this.state.receivedInfo.brand}
+                            style={this.state.receivedInfo.style}
+                            color={this.state.receivedInfo.color}
+                            xSmall={this.state.receivedInfo.xSmall}
+                            small={this.state.receivedInfo.small}
+                            medium={this.state.receivedInfo.medium}
+                            large={this.state.receivedInfo.large}
+                            xLarge={this.state.receivedInfo.xLarge}
+                            twoXL={this.state.receivedInfo.twoXL}
+                            threeXL={this.state.receivedInfo.threeXL}
+                            fourXL={this.state.receivedInfo.fourXL}
+                            fiveXL={this.state.receivedInfo.fiveXL}
+                            hats={this.state.receivedInfo.hats}
+                            id={"received"}
+                          />
+                          <br></br>
+                          <FormGroup>
+                            <Label text="Notes" />
+                            <Input
+                              name="notes"
+                              value={this.state.notes}
+                              onChange={this.handleInputChange}
+                            />
+                          </FormGroup>
+                          <br></br>
+                          <h5>Make sure that all of the info is correct before submitting</h5>
+                          <FormBtn
+                            text={this.state.buttonText}
+                            classes="btn-success logoutBtn homeBtn"
+                            onClick={this.nextSubmitButton}
+                            disabled={
+                              (this.state.POnum.length === 5 && this.state.design && this.state.issue)
+                                &&
+                                (this.state.receivedInfo.brand && this.state.receivedInfo.style && this.state.receivedInfo.color)
+                                &&
+                                (this.state.receivedInfo.xSmall > 0 || this.state.receivedInfo.small > 0 || this.state.receivedInfo.medium > 0 || this.state.receivedInfo.large > 0 || this.state.receivedInfo.xLarge > 0 || this.state.receivedInfo.twoXL > 0 || this.state.receivedInfo.threeXL > 0 || this.state.receivedInfo.fourXL > 0 || this.state.receivedInfo.fiveXL > 0)
+                                ?
+                                "" : "disabled"
+                            }
+                          />
+                        </div>
+                      :
+                      ""
+                  }
 
-          </form>
-        </div>
+                </form>
+              </div>
+            </div>
+        }
+
       </div>
     );
   }
