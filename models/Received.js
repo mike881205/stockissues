@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Received.associate = (models) => {
         Received.belongsTo(models.POInfo, {
-            onDelete: "cascade",
+            onDelete: "cascade"
         });
     };
 
