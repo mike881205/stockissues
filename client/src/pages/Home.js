@@ -383,10 +383,10 @@ class Home extends Component {
         });
         break;
       case "Yes":
-        this.setState({ priority: true })
+        this.setState({ priority: "Yes" })
         break;
       case "No":
-        this.setState({ priority: false })
+        this.setState({ priority: "No" })
         break;
     }
   }
