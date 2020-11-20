@@ -8,6 +8,7 @@ import "./home.css"
 import GarmentInfo from "../components/GarmentInfo";
 
 const issues = ["Missing Garments - Wrong or Extra Garments Received", "Received Damaged/Stained/Defective Garments", "Missing Garments - Packing Slip is Correct, No Extras", "Extra Garments Received - Packing Slip is Correct, No Missing Garments"]
+const priority = ["Yes", "No"]
 
 class Home extends Component {
 
@@ -48,7 +49,8 @@ class Home extends Component {
     },
     showReceivedInput: false,
     buttonText: "",
-    notes: ""
+    notes: "",
+    priority: ""
   }
 
   addPOInfo = () => {
@@ -96,6 +98,7 @@ class Home extends Component {
     API.addMissingInfo({
       POnum: PONUM,
       design: POdesign,
+      priority: this.state.priority,
       brand: this.state.missingInfo.brand,
       style: this.state.missingInfo.style,
       color: this.state.missingInfo.color,
@@ -362,6 +365,12 @@ class Home extends Component {
           buttonText: "Submit",
         });
         break;
+      case "Yes":
+        this.setState({ priority: true })
+        break;
+      case "No":
+        this.setState({ priority: false })
+        break;
     }
   }
 
@@ -450,6 +459,14 @@ class Home extends Component {
                           // hats={this.state.missingInfo.hats}
                           id={"missing"}
                         />
+                        <FormGroup>
+                          <Label text="Priority?" />
+                          <DropdownList
+                            name="priority"
+                            onChange={this.dropDownChange}
+                            data={priority}
+                          />
+                        </FormGroup>
                         <FormBtn
                           text={this.state.buttonText}
                           classes="btn-success logoutBtn homeBtn"
@@ -486,6 +503,14 @@ class Home extends Component {
                           // hats={this.state.missingInfo.hats}
                           id={"missing"}
                         />
+                        <FormGroup>
+                          <Label text="Priority?" />
+                          <DropdownList
+                            name="priority"
+                            onChange={this.dropDownChange}
+                            data={priority}
+                          />
+                        </FormGroup>
                         <hr></hr>
                         <h3>What was received?</h3>
                         <hr></hr>
@@ -557,6 +582,14 @@ class Home extends Component {
                         // hats={this.state.missingInfo.hats}
                         id={"missing"}
                       />
+                      <FormGroup>
+                        <Label text="Priority?" />
+                        <DropdownList
+                          name="priority"
+                          onChange={this.dropDownChange}
+                          data={priority}
+                        />
+                      </FormGroup>
                       <br></br>
                       <FormGroup>
                         <Label text="Notes" />

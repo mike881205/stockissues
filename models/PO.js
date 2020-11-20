@@ -19,12 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    // POInfo.associate = (models) => {
-    //     POInfo.hasMany(models.Missing, {
-    //         onDelete: "cascade"
-    //     });
-    // };
-
     POInfo.associate = (models) => {
         POInfo.hasMany(models.Missing, {
             onDelete: "cascade"

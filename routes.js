@@ -68,6 +68,7 @@ router.post("/api/addMissingInfo", (req, res) => {
   db.Missing.create({
     POnum: req.body.POnum,
     design: req.body.design,
+    priority: req.body.priority,
     brand: req.body.brand,
     style: req.body.style,
     color: req.body.color,

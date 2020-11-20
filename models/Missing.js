@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        priority: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
         brand: {
             type: DataTypes.STRING,
             allowNull: false
