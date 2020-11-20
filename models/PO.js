@@ -1,4 +1,4 @@
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
     let POInfo = sequelize.define("POInfo", {
         POnum: {
             type: DataTypes.STRING,
@@ -19,13 +19,16 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    POInfo.associate = function (models) {
+    // POInfo.associate = (models) => {
+    //     POInfo.hasMany(models.Missing, {
+    //         onDelete: "cascade"
+    //     });
+    // };
+
+    POInfo.associate = (models) => {
         POInfo.hasMany(models.Missing, {
             onDelete: "cascade"
         });
-    };
-
-    POInfo.associate = function (models) {
         POInfo.hasMany(models.Received, {
             onDelete: "cascade"
         });

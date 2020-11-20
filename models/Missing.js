@@ -1,4 +1,4 @@
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
     let Missing = sequelize.define("Missing", {
         POnum: {
             type: DataTypes.STRING,
@@ -58,11 +58,11 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Missing.associate = function (models) {
+    Missing.associate = (models) => {
         Missing.belongsTo(models.POInfo, {
             onDelete: "cascade"
         });
-    };
+    };;
 
     return Missing;
 };

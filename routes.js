@@ -51,20 +51,20 @@ router.get("/api/user", function (req, res) {
 //   res.json(req.user);
 // });
 
-router.post("/api/addPOInfo", function (req, res) {
+router.post("/api/addPOInfo", (req, res) => {
   db.POInfo.create({
     POnum: req.body.POnum,
     design: req.body.design,
     issue: req.body.issue,
     notes: req.body.notes
   }).then(POInfo => res.json(POInfo))
-    .catch(function (err) {
+    .catch(err => {
       console.log(err);
       res.json(err);
     });
 })
 
-router.post("/api/addMissingInfo", function (req, res) {
+router.post("/api/addMissingInfo", (req, res) => {
   db.Missing.create({
     POnum: req.body.POnum,
     design: req.body.design,
@@ -82,13 +82,13 @@ router.post("/api/addMissingInfo", function (req, res) {
     fiveXL: req.body.fiveXL,
     POInfoId: req.body.POInfoId
   }).then(MissingInfo => res.json(MissingInfo))
-    .catch(function (err) {
+    .catch(err => {
       console.log(err);
       res.json(err);
     });
 })
 
-router.post("/api/addReceivedInfo", function (req, res) {
+router.post("/api/addReceivedInfo", (req, res) => {
   db.Received.create({
     POnum: req.body.POnum,
     design: req.body.design,
@@ -106,10 +106,22 @@ router.post("/api/addReceivedInfo", function (req, res) {
     fiveXL: req.body.fiveXL,
     POInfoId: req.body.POInfoId
   }).then(ReceivedInfo => res.json(ReceivedInfo))
-  .catch(function (err) {
-    console.log(err);
-    res.json(err);
-  });
+    .catch(err => {
+      console.log(err);
+      res.json(err);
+    });
 })
+
+router.get("/api/getPOinfo", (req, res) => {
+  db.POInfo.findAll({
+    include: [{ all: true, nested: true }],
+    order: [["POnum", "DESC"]]
+  })
+    .then(dbPOinfo => res.json(dbPOinfo))
+    .catch(err => {
+      console.log(err);
+      res.json(err);
+    });
+});
 
 module.exports = router;

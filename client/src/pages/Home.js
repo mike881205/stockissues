@@ -382,6 +382,16 @@ class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    API.getPOinfo()
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
     return (
       <div className="container" align="center">

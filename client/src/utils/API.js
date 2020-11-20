@@ -16,13 +16,16 @@ export default {
   availableUN: function (username) {
     return axios.get("/api/user/?username=" + username);
   },
-  addPOInfo: function(POnum, design, issue, notes) {
+  addPOInfo: (POnum, design, issue, notes) => {
     return axios.post("/api/addPOInfo", POnum, design, issue, notes)
   },
-  addMissingInfo: function(POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId) {
+  addMissingInfo: (POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId) => {
     return axios.post("/api/addMissingInfo", POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId)
   },
-  addReceivedInfo: function(POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId) {
+  addReceivedInfo: (POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId) => {
     return axios.post("/api/addReceivedInfo", POnum, design, brand, style, color, xSmall, small, medium, large, xLarge, twoXL, threeXL, fourXL, fiveXL, POInfoId)
+  },
+  getPOinfo: () => {
+    return axios.get("/api/getPOinfo")
   }
 };
