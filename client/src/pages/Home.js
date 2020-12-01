@@ -707,12 +707,12 @@ class Home extends Component {
             </div>
             :
             <div className="jumbotron homeJumbo">
-              <FormBtn
+              {/* <FormBtn
                 text={"View Submitted Issues"}
                 classes="btn-success logoutBtn homeBtn"
                 onClick={this.viewSubmitted}
               />
-              <br></br>
+              <br></br> */}
               <h1>Stock Issues</h1>
               <hr></hr>
               <form>
