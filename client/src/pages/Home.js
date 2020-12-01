@@ -6,6 +6,9 @@ import { Redirect } from 'react-router-dom'
 import API from "../utils/API";
 import "./home.css"
 import GarmentInfo from "../components/GarmentInfo";
+import SubmittedPOs from "../components/SubmittedPOs";
+import SubmittedDesigns from "../components/SubmittedDesigns";
+import SubmittedSizes from "../components/SubmittedSizes";
 
 const issues = ["Missing Garments - Wrong or Extra Garments Received", "Received Damaged/Stained/Defective Garments", "Missing Garments - Packing Slip is Correct, No Extras", "Extra Garments Received - Packing Slip is Correct, No Missing Garments"]
 const priority = ["Yes", "No"]
@@ -54,8 +57,15 @@ class Home extends Component {
     buttonText: "Next",
     notes: "",
     priority: "",
+    dbInfo: "",
     viewSubmitted: false,
-    newPOinfo: ""
+    viewDesigns: false,
+    viewSizes: false,
+    submittedPOs: [],
+    submittedDesings: [],
+    submittedSizes: [],
+    POdesigns: [],
+    selectedPO: ""
   }
 
   addPOInfo = () => {
@@ -156,6 +166,53 @@ class Home extends Component {
         alert("Issue Submitted")
         window.location.reload();
       })
+  }
+
+  getPOinfo = () => {
+
+    API.getPOinfo()
+      .then(res => {
+
+        this.setState({ dbInfo: res.data })
+
+        let submittedPOs = []
+        let POnums = []
+        let data = res.data
+
+        for (let i = 0; i < data.length; i++) {
+
+          let index = data[i]
+
+          POnums.push(index.POnum)
+
+        }
+
+        for (let i = 0; i < POnums.length; i++) {
+
+          let index = POnums[i]
+          let nextIndex = POnums[i + 1]
+
+          if (i + 1 && nextIndex === index) {
+            POnums.splice(i + 1, 1)
+          }
+
+          submittedPOs.push(
+            <SubmittedPOs
+              key={i + 1}
+              POnum={index}
+              name={index}
+              viewDesigns={this.state.viewDesigns}
+              viewPOdesigns={this.viewPOdesigns}
+            />
+          )
+
+        }
+
+        this.setState({ submittedPOs: submittedPOs })
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleInputChange = event => {
@@ -408,13 +465,17 @@ class Home extends Component {
     }
   }
 
-  viewSubmittedIssues = () => {
+  viewSubmitted = () => {
 
     let viewSubmitted = this.state.viewSubmitted
 
     switch (viewSubmitted) {
       case true:
-        this.setState({ viewSubmitted: false })
+        this.setState({
+          viewSubmitted: false,
+          viewDesigns: false,
+          viewSizes: false
+        })
         break;
       case false:
         this.setState({ viewSubmitted: true })
@@ -422,14 +483,178 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
-    API.getPOinfo()
-      .then(res => {
-        console.log(res.data)
+  viewPOdesigns = (event) => {
+
+    let POnum = event.target.name;
+    let dbInfo = this.state.dbInfo
+    let submittedDesings = []
+    let designIssues = []
+
+    console.log(dbInfo)
+
+    this.setState({ viewDesigns: true })
+
+    for (let i = 0; i < dbInfo.length; i++) {
+
+      let info = dbInfo[i]
+
+      if (POnum === info.POnum) {
+
+        designIssues.push(info)
+      }
+    }
+
+    console.log(designIssues)
+
+    for (let i = 0; i < designIssues.length; i++) {
+
+      submittedDesings.push(
+        <SubmittedDesigns
+          key={i + 1}
+          viewDesignSizes={this.viewDesignSizes}
+          design={designIssues[i].design}
+          issue={designIssues[i].issue}
+          class={designIssues[i].design}
+          id={designIssues[i].issue}
+        />
+      )
+    }
+
+    this.setState({
+      submittedDesings: submittedDesings,
+      POdesigns: designIssues,
+      selectedPO: POnum
+    })
+  }
+
+  viewDesignSizes = (event) => {
+
+    // console.log(event.target)
+
+    let submittedSizes;
+    let POdesigns = this.state.POdesigns;
+    let propPOnum = this.state.selectedPO;
+    let propDesign = event.target.className;
+    let propIssue = event.target.id;
+    let issue;
+    let missingSizes;
+    let receivedSizes;
+
+    this.setState({ viewSizes: true })
+
+    if (propDesign.includes("col ")) {
+      propDesign = propDesign.replace("col ", "")
+    }
+
+    for (let i = 0; i < POdesigns.length; i++) {
+
+      let info = POdesigns[i]
+
+      if (propPOnum === info.POnum && propDesign === info.design && propIssue === info.issue) {
+
+        missingSizes = info.Missings[0]
+        receivedSizes = info.Receiveds[0]
+        issue = info.issue
+      }
+    }
+
+    console.log(missingSizes)
+    console.log(receivedSizes)
+
+    if (missingSizes && receivedSizes) {
+      submittedSizes =
+        <SubmittedSizes
+          issue={issue}
+          missingBrand={missingSizes.brand}
+          missingStyle={missingSizes.style}
+          missingColor={missingSizes.color}
+          missingXS={missingSizes.xSmall}
+          missingS={missingSizes.small}
+          missingM={missingSizes.medium}
+          missingL={missingSizes.large}
+          missingXL={missingSizes.xLarge}
+          missing2X={missingSizes.twoXL}
+          missing3X={missingSizes.threeXL}
+          missing4X={missingSizes.fourXL}
+          missing5X={missingSizes.fiveXL}
+          receivedBrand={receivedSizes.brand}
+          receivedStyle={receivedSizes.style}
+          receivedColor={receivedSizes.color}
+          receivedXS={receivedSizes.xSmall}
+          receivedS={receivedSizes.small}
+          receivedM={receivedSizes.medium}
+          receivedL={receivedSizes.large}
+          receivedXL={receivedSizes.xLarge}
+          received2X={receivedSizes.twoXL}
+          received3X={receivedSizes.threeXL}
+          received4X={receivedSizes.fourXL}
+          received5X={receivedSizes.fiveXL}
+        />
+    }
+    else if (missingSizes && !receivedSizes) {
+      submittedSizes =
+        <SubmittedSizes
+          issue={issue}
+          missingBrand={missingSizes.brand}
+          missingStyle={missingSizes.style}
+          missingColor={missingSizes.color}
+          missingXS={missingSizes.xSmall}
+          missingS={missingSizes.small}
+          missingM={missingSizes.medium}
+          missingL={missingSizes.large}
+          missingXL={missingSizes.xLarge}
+          missing2X={missingSizes.twoXL}
+          missing3X={missingSizes.threeXL}
+          missing4X={missingSizes.fourXL}
+          missing5X={missingSizes.fiveXL}
+        />
+    }
+    else if (receivedSizes && !missingSizes) {
+      submittedSizes =
+        <SubmittedSizes
+          issue={issue}
+          receivedBrand={receivedSizes.brand}
+          receivedStyle={receivedSizes.style}
+          receivedColor={receivedSizes.color}
+          receivedXS={receivedSizes.xSmall}
+          receivedS={receivedSizes.small}
+          receivedM={receivedSizes.medium}
+          receivedL={receivedSizes.large}
+          receivedXL={receivedSizes.xLarge}
+          received2X={receivedSizes.twoXL}
+          received3X={receivedSizes.threeXL}
+          received4X={receivedSizes.fourXL}
+          received5X={receivedSizes.fiveXL}
+        />
+    }
+
+    this.setState({ submittedSizes: submittedSizes })
+  }
+
+  viewBackButton = () => {
+
+    let viewSizes = this.state.viewSizes
+    let viewDesigns = this.state.viewDesigns
+
+
+    if (viewSizes) {
+      this.setState({
+        viewSizes: false,
+        viewDesigns: true
       })
-      .catch(err => {
-        console.log(err);
-      });
+    }
+    else if (viewDesigns) {
+      this.setState({
+        viewDesigns: false,
+        viewSizes:false,
+        viewSubmitted: true
+      })
+    }
+  }
+
+  componentDidMount() {
+
+    this.getPOinfo()
   }
 
   render() {
@@ -438,28 +663,56 @@ class Home extends Component {
 
         {
           this.state.viewSubmitted ?
-            <div className="jumbotron homeJumbo">
+            <div className="jumbotron ">
               <FormBtn
-                text={"Back"}
+                text={"Submit Issue"}
                 classes="btn-success logoutBtn homeBtn"
-                onClick={this.viewSubmittedIssues}
+                onClick={this.viewSubmitted}
               />
               <h1>Submitted Stock Issues</h1>
               <hr></hr>
-              <div className="row">
-                <div className="col">
-
-                </div>
-              </div>
+              {
+                this.state.viewSizes ?
+                  <div>
+                    <div className="PObox">
+                      {this.state.submittedSizes}
+                    </div>
+                  </div>
+                  :
+                  this.state.viewDesigns ?
+                    <div>
+                      <p>Click on a Design to View Details</p>
+                      <hr></hr>
+                      <div className="row">
+                        <div className="col">
+                          <p><strong>Design</strong></p>
+                        </div>
+                        <div className="col">
+                          <p><strong>Issue</strong></p>
+                        </div>
+                      </div>
+                      <div className="PObox">
+                        {this.state.submittedDesings}
+                      </div>
+                    </div>
+                    :
+                    <div>
+                      <p>Click on a PO number to view issues for that PO</p>
+                      <hr></hr>
+                      <div className="PObox">
+                        {this.state.submittedPOs}
+                      </div>
+                    </div>
+              }
             </div>
             :
             <div className="jumbotron homeJumbo">
-              {/* <FormBtn
+              <FormBtn
                 text={"View Submitted Issues"}
                 classes="btn-success logoutBtn homeBtn"
-                onClick={this.viewSubmittedIssues}
+                onClick={this.viewSubmitted}
               />
-              <br></br> */}
+              <br></br>
               <h1>Stock Issues</h1>
               <hr></hr>
               <form>

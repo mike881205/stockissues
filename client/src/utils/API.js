@@ -27,5 +27,11 @@ export default {
   },
   getPOinfo: () => {
     return axios.get("/api/getPOinfo")
+  },
+  getMissingInfo: () => {
+    return axios.get("/api/getMissingInfo/")
+  },
+  getReceivedInfo: (POnum) => {
+    return axios.get("/api/getReceivedInfo", POnum)
   }
 };

@@ -125,4 +125,17 @@ router.get("/api/getPOinfo", (req, res) => {
     });
 });
 
+router.get("/api/getMissingInfo/", (req, res) => {
+  db.Missing.findAll({
+    // where: {
+    //   POnum: req.params.id
+    // },
+  })
+    .then(dbResults => res.json(dbResults))
+    .catch(err => {
+      console.log(err);
+      res.json(err);
+    });
+});
+
 module.exports = router;
